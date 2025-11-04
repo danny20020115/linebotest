@@ -1,0 +1,200 @@
+* {
+    box-sizing: border-box;
+    font-family: "Noto Sans TC", sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    background-color: #ffffff; /* 白色背景 */
+  }
+  
+
+  
+  .form {
+   margin: 0 auto;
+    width: 100%;
+    max-width: 800px;             /* 桌機寬度 */
+    background: #f9f9f9;
+    border-radius: 16px;
+    padding: 50px 60px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  }
+  
+  .logo {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .logo img {
+    width: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .logo h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+  }
+  
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  button{
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+  
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+    margin-top: 10px;
+  }
+  
+  .section-title {
+    display: block;
+    margin: 25px 0 10px;
+    font-weight: bold;
+  }
+  
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+  }
+  
+  .checkbox-group {
+    display: grid;                 /* 用 grid 讓每格平均 */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;                     /* 格子之間間距 */
+}
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.checkbox-group label {
+    display: flex;
+    justify-content: flex-start;   /* 內容靠左 */
+    align-items: center;           /* 垂直置中 */
+    gap: 8px;                      /* checkbox 與文字之間的間距 */
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;           /* 避免文字換行 */
+}
+  
+  .checkbox-group label:hover {
+    background: #f1f1f1;
+  }
+  
+  .checkbox-group input {
+    margin-right: 6px;
+  }
+  
+/* 只影響註冊表單裡的按鈕，不影響其他地方（例如 LoginModal 的關閉鈕） */
+.form button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  padding: 14px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+.form button:hover {
+  background-color: #218838;
+}
+
+  
+  .login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 15px;
+  }
+  
+  .login-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Signup 表單響應式修正 */
+@media (max-width: 768px) {
+  .form {
+    padding: 30px 20px;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr; /* 小螢幕改單欄 */
+    gap: 12px;
+  }
+
+  .checkbox-group {
+    flex-direction: column; /* 改直排 */
+    align-items: flex-start;
+  }
+
+  .checkbox-group label {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Header 響應式修正 */
+@media (max-width: 768px) {
+  .nav-wrapper {
+    flex-wrap: wrap;         /* 避免擠爆 */
+    gap: 12px;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .login-btn {
+    width: auto;
+    padding: 6px 12px;
+  }
+}
+/* 修正 signup 頁面「登入」連結不要直排 */
+.login-link a {
+  display: inline-block;
+  white-space: nowrap;   /* 文字強制不換行 */
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* signup.css 裡改這樣（示例） */
+.form button { /* 原本是 button */
+  background-color: #28a745;
+  color: #fff;
+  /* 其餘不變… */
+}
+.form button:hover { background-color: #218838; }
+
+

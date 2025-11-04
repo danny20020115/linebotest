@@ -1,0 +1,929 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #1f2937;
+    background-color: #ffffff;
+}
+
+.container {
+    text-align: center;
+    max-width: 1200px;
+    padding: 10px 0px;
+    margin: 0 auto;
+}
+
+.container-heard{
+     display: flex;
+    max-width: 1200px;
+    padding: 30px 0px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-icon {
+    background: #2563eb;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 24px;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+
+
+
+
+.login-icon {
+    font-size: 16px;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #dbeafe 0%, #ffffff 50%, #f0fdfa 100%);
+    padding: 80px 0;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 24px;
+    line-height: 1.2;
+}
+
+.hero-highlight {
+    color: #2563eb;
+    display: block;
+}
+
+.hero-description {
+    font-size: 1.25rem;
+    color: #6b7280;
+    margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Button Styles */
+.btn {
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #2563eb;
+    border: 2px solid #2563eb;
+}
+
+.btn-secondary:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-teal {
+    background: #0d9488;
+    color: white;
+}
+
+.btn-teal:hover {
+    background: #0f766e;
+}
+
+.btn-white {
+    background: white;
+    color: #2563eb;
+}
+
+.btn-white:hover {
+    background: #f3f4f6;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* Section Styles */
+.section {
+    padding: 80px 0;
+}
+
+.section-gray {
+    background: #f9fafb;
+}
+
+
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 16px;
+}
+
+.section-description {
+    font-size: 1.125rem;
+    color: #6b7280;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.section-header{
+    padding: 5%;
+}
+
+
+/* Cards Grid */
+.cards-grid {
+    display:flex;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+}
+
+.card {
+    padding: 32px;
+    border-radius: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.card-blue {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+}
+
+.card-teal {
+    background: linear-gradient(135deg, #ccfbf1, #99f6e4);
+}
+
+.card-green {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+}
+
+.card-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 12px;
+}
+
+.card-description {
+    color: #6b7280;
+    margin-bottom: 16px;
+}
+
+.card-button {
+    background: none;
+    border: none;
+    color: #2563eb;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.card-button:hover {
+    color: #1d4ed8;
+}
+
+/* Two Column Layout */
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+.column {
+    padding: 0 16px;
+}
+
+/* Features List */
+.features-list {
+    margin: 32px 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    color: #374151;
+}
+
+.feature-icon {
+    background: #dbeafe;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 1.25rem;
+}
+
+/* VR Demo */
+.vr-demo {
+    background: linear-gradient(135deg, #ccfbf1, #bfdbfe);
+    padding: 32px;
+    border-radius: 16px;
+}
+
+
+.demo-icon {
+    font-size: 2rem;
+}
+
+.demo-list {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.demo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.demo-item:last-child {
+    margin-bottom: 0;
+}
+
+.status.available {
+    color: #0d9488;
+    font-weight: 600;
+}
+
+/* AI Assistant Demo */
+.ai-assistant-demo {
+    background: linear-gradient(135deg, #2563eb, #0d9488);
+    border-radius: 24px;
+    padding: 48px;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+.assistant-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+}
+
+.assistant-features {
+    list-style: none;
+    margin-bottom: 32px;
+}
+
+.assistant-features li {
+    margin-bottom: 12px;
+    color: #dbeafe;
+}
+
+/* Chat Demo */
+.chat-demo {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.chat-avatar {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+}
+
+.chat-name {
+    font-weight: 600;
+}
+
+.online-status {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    margin-left: auto;
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.message {
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+}
+
+.ai-message {
+    background: rgba(255, 255, 255, 0.2);
+    align-self: flex-start;
+    max-width: 80%;
+}
+
+.user-message {
+    background: rgba(255, 255, 255, 0.1);
+    align-self: flex-end;
+    max-width: 80%;
+}
+
+/* Footer */
+.footer {
+    background: #1f2937;
+    color: white;
+    padding: 64px 0 32px;
+}
+
+.footer-grid {
+    display: flex;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 75px;
+    margin-bottom: 48px;
+    margin: 0 20%;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.footer-description {
+    color: #9ca3af;
+}
+
+.footer-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: #9ca3af;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9ca3af;
+}
+
+.contact-icon {
+    font-size: 1rem;
+}
+
+.footer-bottom {
+    border-top: 1px solid #374151;
+    padding-top: 32px;
+    text-align: center;
+    color: #9ca3af;
+}
+
+
+
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-group input {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+
+
+
+
+
+
+/* Logo 區域：圖示 + 文字並排且不換行 */
+
+
+
+
+/* 卡片本體：對齊你截圖的尺寸與視覺 */
+.login-card {
+  width: 100%;
+  max-width: 520px;                 /* 卡片寬度 */
+  background: #fff;
+  border-radius: 20px;              /* 大圓角 */
+  box-shadow: 0 20px 60px rgba(0,0,0,.18);
+  padding: 24px 28px 22px;
+}
+
+/* 標題 + 右上角關閉 */
+
+
+.form-group { margin: 14px 0; }
+.form-group label {
+  display: block;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+
+
+.like {
+  background: none;
+  border: none;
+  padding: 0 2px;
+  margin-left: 6px;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* 手機優化 */
+@media (max-width: 480px) {
+  .login-card { padding: 20px 16px 18px; border-radius: 16px; }
+}
+
+
+
+
+/* 彈窗卡片 */
+.login-card {
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+  padding: 24px 28px 22px;
+  position: relative;
+  animation: fadeInScale 0.25s ease;
+}
+
+/* 動畫：淡入+縮放 */
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* 標題 + 右上角關閉 */
+
+
+.close-btn {
+  background: transparent !important;
+  border: none !important;
+  font-size: 20px !important; /* 想更小可調 18px */
+  color: #6b7280 !important;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px !important;
+}
+.close-btn:hover { color: #374151 !important; }
+
+/* 表單區 */
+.login-form { margin-top: 6px; }
+.form-group { margin: 14px 0; }
+.form-group label {
+  display: block;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+.login-form input {
+  width: 100%;
+  height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f9fafb;
+  font-size: 15px;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.login-form input::placeholder { color: #9ca3af; }
+.login-form input:focus {
+  outline: none;
+  background: #fff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+}
+
+/* 主要按鈕：藍色、全寬、圓角 */
+.btn.btn-primary.btn-full {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: .04em;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: transform .03s ease, filter .2s ease;
+}
+.btn.btn-primary.btn-full:hover { filter: brightness(1.03); }
+.btn.btn-primary.btn-full:active { transform: translateY(1px); }
+
+/* 底部註冊連結 */
+.signup-line {
+  text-align: center;
+  margin: 14px 0 4px;
+  color: #6b7280;
+}
+.link-like {
+  background: none;
+  border: none;
+  padding: 0 2px;
+  margin-left: 6px;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+}
+.link-like:hover { text-decoration: underline; }
+
+/* 手機優化 */
+@media (max-width: 480px) {
+  .login-card { padding: 20px 16px 18px; border-radius: 16px; }
+  .btn.btn-primary.btn-full { height: 46px; font-size: 17px; }
+}
+
+
+.login-card { position: relative; } 
+.al-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  white-space: nowrap;                             /* 「登入」不換行 */
+  line-height: 1.1;
+}
+.close-btn {
+  position: absolute !important;                   /* 固定到卡片右上角 */
+  top: 14px;
+  right: 16px;
+  background: transparent !important;
+  border: none !important;
+  font-size: 20px !important;
+  color: #6b7280 !important;
+  line-height: 1;
+  padding: 2px !important;
+  width: auto !important;
+  height: auto !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+.close-btn:hover { color: #374151 !important; }
+
+/* ==== Header / Nav — 唯一版（請放在 styles.css 最底） ==== */
+
+/* 外層 Header */
+.header{
+    display: flex;
+  background:#fff;
+  position:sticky; top:0; z-index:1000;
+  border-bottom:1px solid #eef2f7;
+  box-shadow:0 2px 12px rgba(17,24,39,.04);
+}
+
+.header {
+    width: 100%;                /* 讓 header 佔滿整個寬度 */
+    background: #ffffff;        /* 你可以改成想要的顏色 */
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.header .nav-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 100%;             /* 撐滿整個畫面寬度 */
+    max-width: none;         /* 取消寬度限制 */
+    padding: 0 20px;
+}
+
+/* Logo 區 */
+.header .logo{display:flex; align-items:center; gap:10px; min-width:0;}
+.header .logo-icon{background:#2563eb; color:#fff; border-radius:12px; padding:8px; font-size:20px;}
+.header .logo-text{font-size:18px; font-weight:700; color:#111827; white-space:nowrap}
+
+/* 導覽列：永遠橫排、字不要太大 */
+.header .nav{
+  display:flex; align-items:center; justify-content:center;
+  gap:22px; flex:1 1 auto; margin:0 24px; flex-wrap:nowrap;
+}
+.header .nav-link{
+  font-size:14.5px; font-weight:600; color:#374151; text-decoration:none;
+  padding:4px 6px; white-space:nowrap; transition:color .15s ease;
+}
+.header .nav-link:hover{ color:#2563eb; }
+
+/* 右側登入按鈕 */
+.header .login-btn{
+    align-items:center; 
+    gap:8px;
+    height:36px;
+    padding:0 14px;
+    background:#2563eb; color:#fff; border:none; border-radius:10px;
+    font-size:14px; font-weight:650; letter-spacing:.01em;
+    white-space:nowrap; cursor:pointer; transition:filter .2s, transform .04s;
+}
+.header .login-btn:hover{ filter:brightness(1.04) }
+.header .login-btn:active{ transform:translateY(1px) }
+
+
+
+/* ==== LoginModal — 唯一版（請放在 styles.css 最底，header 後面） ==== */
+
+/* 遮罩 */
+.modal{
+  position:fixed; inset:0; display:none;
+  align-items:center; justify-content:center;
+  background:rgba(0,0,0,.4); backdrop-filter:blur(3px);
+  z-index:9999;
+}
+.modal.is-open{ display:flex !important; }
+
+/* 卡片 */
+.login-card{
+  width:100%; max-width:520px; background:#fff;
+  border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,.18);
+  padding:24px 28px 22px; position:relative;
+  animation:fadeInScale .25s ease;
+}
+@keyframes fadeInScale{ from{opacity:0; transform:scale(.97)} to{opacity:1; transform:scale(1)} }
+
+/* 標題 + 關閉 */
+.modal-header{
+  display:flex; align-items:center; justify-content:flex-start;
+  gap:8px; padding-right:36px; margin-bottom:12px;
+}
+.modal-title{
+  margin:0; font-size:28px; font-weight:800; line-height:1.1; white-space:nowrap;
+}
+.close-btn{
+  position:absolute; top:14px; right:16px;
+  background:transparent; border:none; padding:2px;
+  font-size:20px; color:#6b7280; line-height:1; cursor:pointer;
+}
+.close-btn:hover{ color:#374151 }
+
+/* 表單欄位 */
+.login-form{ margin-top:6px; }
+.form-group{ margin:14px 0; }
+.form-group label{ display:block; font-weight:700; color:#111827; margin-bottom:8px; }
+.login-form input{
+  width:100%; height:44px; padding:10px 14px;
+  border:1px solid #e5e7eb; border-radius:10px; background:#f9fafb; font-size:15px;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+.login-form input:focus{
+  outline:none; background:#fff; border-color:#3b82f6;
+  box-shadow:0 0 0 3px rgba(59,130,246,.15);
+}
+
+/* 主要按鈕 */
+.btn.btn-primary.btn-full{
+  width:100%; height:48px; border:none; border-radius:12px;
+  background:#2563eb; color:#fff; font-weight:800; font-size:18px; letter-spacing:.04em;
+  cursor:pointer; margin-top:10px; transition:transform .03s, filter .2s;
+}
+.btn.btn-primary.btn-full:hover{ filter:brightness(1.03) }
+.btn.btn-primary.btn-full:active{ transform:translateY(1px) }
+
+/* 底部連結 */
+.signup-line{ text-align:center; margin:14px 0 4px; color:#6b7280; }
+.link-like{ background:none; border:none; padding:0 2px; margin-left:6px; color:#2563eb; font-weight:600; cursor:pointer; }
+.link-like:hover{ text-decoration:underline }
+
+/* 手機優化 */
+@media (max-width:480px){
+  .login-card{ padding:20px 16px 18px; border-radius:16px; }
+  .modal-title{ font-size:24px; }
+  .btn.btn-primary.btn-full{ height:46px; font-size:17px; }
+}
+
+/* ==== AI 遊戲頁面 (AIGame.jsx) ==== */
+
+.ai-game-container {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 16px;
+  text-align: left;
+}
+
+.ai-game-container h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+.ai-game-container p {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+.ai-game-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.ai-game-form label {
+  font-weight: 600;
+  color: #111827;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.ai-game-form input,
+.ai-game-form select {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ai-game-form input:focus,
+.ai-game-form select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  outline: none;
+}
+
+.generate-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease;
+}
+
+.generate-btn:hover {
+  background: #1d4ed8;
+}
+
+.generate-btn:active {
+  transform: translateY(1px);
+}
+
+.question-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  background: #fff;
+  transition: box-shadow 0.2s;
+}
+
+.question-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.question-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.option-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.option-item label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.option-item:hover label {
+  background: #f9fafb;
+}
+
+.answer-block {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+

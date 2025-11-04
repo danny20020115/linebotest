@@ -1,0 +1,131 @@
+/* ===== Base ===== */
+.quiz-page{
+  background: #f8fafc;
+  min-height: 100svh;
+  padding: 24px 0 40px;
+  overflow-x: hidden;
+}
+.quiz-wrap{
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.quiz-title{ font-size: 28px; font-weight: 800; margin: 2px 0 6px; }
+.quiz-sub{ color:#64748b; margin-bottom: 14px; }
+
+/* 小小的彩色閃爍（正確/錯誤） */
+.quiz-page.flash-good .quiz-card{ box-shadow: 0 10px 24px rgba(34,197,94,.25); }
+.quiz-page.flash-bad  .quiz-card{ animation: shake .3s linear; }
+@keyframes shake { 0%,100%{ transform: translateX(0) } 25%{ transform: translateX(-4px) } 75%{ transform: translateX(4px) } }
+
+/* ===== Toolbar ===== */
+.quiz-toolbar{
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr 0.7fr auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+.field label{ display:block; font-weight:700; margin-bottom:6px; color:#0f172a; }
+.input{
+  height: 44px; padding: 10px 12px;
+  border:1px solid #e5e7eb; border-radius: 10px; background:#fff; width:100%;
+}
+.btn{ border:0; border-radius:999px; height:44px; padding:0 16px; font-weight:700; cursor:pointer; }
+.btn-primary{ background:#2563eb; color:#fff; }
+.btn:disabled{ opacity:.6; cursor: default; }
+
+.error-box{
+  background:#fef2f2; color:#991b1b; border:1px solid #fecaca;
+  border-radius:12px; padding:10px 12px; margin-bottom: 12px; font-size:14px;
+}
+
+/* ===== HUD ===== */
+.hud{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; margin:8px 0 12px;
+}
+.hearts .heart{ font-size:20px; opacity:.3; margin-right:6px; }
+.hearts .heart.on{ opacity:1; color:#ef4444; }
+
+.hud-center{ flex:1; }
+.progress{
+  height:8px; background:#e5e7eb; border-radius:999px; overflow:hidden;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.04);
+}
+.progress .bar{
+  height:100%; background:linear-gradient(90deg,#60a5fa,#2563eb);
+  width:0; border-radius:999px; transition: width .3s;
+}
+.hud-sub{
+  display:flex; justify-content:space-between; margin-top:6px;
+  font-size:12px; color:#64748b; font-weight:700;
+}
+
+.timer{ position:relative; width:42px; height:42px; }
+.timer .ring{
+  width:42px; height:42px; border-radius:999px; background:#e5e7eb;
+}
+.timer .sec{
+  position:absolute; inset:0; display:grid; place-items:center;
+  font-weight:800; color:#111827; font-size:12px;
+}
+
+/* ===== Hint ===== */
+.quiz-hint{
+  margin-top: 8px; padding: 18px; border: 1px solid #e5e7eb; border-radius: 16px;
+  background:#fff; text-align:center; color:#6b7280;
+}
+
+/* ===== Card ===== */
+.quiz-card{
+  margin-top: 6px; padding: 18px; border:1px solid #e5e7eb; border-radius:16px;
+  background:#fff; box-shadow:0 10px 24px rgba(2,6,23,.06);
+}
+.quiz-question{
+  font-size: 20px; font-weight: 800; color:#0f172a; margin: 6px 0 14px;
+}
+.quiz-options{ display:grid; gap:10px; }
+
+/* 選項：更像遊戲的動態感 */
+.opt{
+  display:flex; align-items:center; gap:10px; text-align:left;
+  padding: 14px 16px; border-radius: 14px; border:1px solid #e5e7eb; background:#fff;
+  cursor:pointer; transition: transform .08s, box-shadow .12s, background .12s, border-color .12s;
+  box-shadow: 0 2px 0 rgba(0,0,0,.04);
+}
+.opt:hover{ transform: translateY(-1px); box-shadow: 0 6px 14px rgba(2,6,23,.06); }
+.opt:active{ transform: translateY(0); }
+
+.opt.picked{ border-color:#c7d2fe; background: rgba(37,99,235,.06); }
+.opt.correct{ border-color:#86efac; background:#dcfce7; }
+.opt.wrong{ border-color:#fecaca; background:#fee2e2; }
+
+.opt-key{ font-weight:800; color:#0f172a; min-width: 22px; }
+.opt-text{ color:#0f172a; }
+
+.quiz-actions{ display:flex; justify-content:flex-end; margin-top: 14px; }
+
+/* ===== Result ===== */
+.quiz-result{
+  margin-top: 10px; padding: 18px; border:1px solid #e5e7eb; border-radius:16px; background:#fff;
+}
+.result-score{ font-size:20px; font-weight:800; margin-bottom:10px; }
+.result-actions{ margin-bottom: 12px; }
+.result-explain{ border-top:1px dashed #e5e7eb; padding-top:10px; }
+.exp-item{ margin-bottom: 10px; }
+.exp-q{ font-weight:700; margin-bottom: 4px; }
+.exp-a{ color:#111827; }
+.exp-txt{ color:#6b7280; margin-top: 4px; }
+
+/* ===== Confetti (簡易) ===== */
+.confetti{
+  position: fixed; inset: 0; pointer-events: none; overflow: hidden;
+}
+.confetti span{
+  position: absolute; top: -10px; animation: drop .8s linear forwards;
+}
+@keyframes drop{
+  to { transform: translateY(140vh) rotate(180deg); opacity: .2; }
+}
