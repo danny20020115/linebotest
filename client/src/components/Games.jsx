@@ -1,35 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
+// src/components/Games.jsx
+import { Link } from "react-router-dom"; // ✅ 新增這行
 
-export default function Games() {
+function Games() {
+  // 卡片資料（之後可以從 API 或 props 來）
   const games = [
     {
-      icon: "Brain",
+      icon: "🧠",
       title: "認知訓練",
-      description:
-        "互動式謎題和記憶遊戲，旨在改善認知功能和心理敏捷性。",
-      button: "立即試用 ->",
+      description: "互動式謎題和記憶遊戲，旨在改善認知功能和心理敏捷性。",
+      button: "立即試用 →",
       className: "card card-blue",
-      link: "/cognitive-training"
+      link: "#", // 暫時保留
     },
     {
-      icon: "Target",
+      icon: "🎯",
       title: "手術模擬",
-      description:
-        "在無風險的虛擬環境中練習手術程序，並獲得即時反饋。",
-      button: "開始訓練 ->",
+      description: "在無風險的虛擬環境中練習手術程序，並獲得即時反饋。",
+      button: "開始訓練 →",
       className: "card card-teal",
-      link: "/surgery-sim"
+      link: "#", // 暫時保留
     },
     {
-      icon: "Gamepad",
+      icon: "🎮",
       title: "患者教育",
-      description:
-        "引人入勝的遊戲，幫助患者了解他們的病情和治療計劃。",
-      button: "探索遊戲 ->",
+      description: "引人入勝的遊戲，幫助患者了解他們的病情和治療計劃。",
+      button: "探索遊戲 →",
       className: "card card-green",
-      link: "/ai-game"
-    }
+      link: "/ai-game", // ✅ 改這裡 → 連到 AI 遊戲頁
+    },
   ];
 
   return (
@@ -45,20 +43,17 @@ export default function Games() {
         <div className="cards-grid">
           {games.map((game, index) => (
             <div key={index} className={game.className}>
-              <div className="card-icon">
-                <span aria-hidden="true">{game.icon}</span>
-              </div>
+              <div className="card-icon">{game.icon}</div>
               <h3 className="card-title">{game.title}</h3>
               <p className="card-description">{game.description}</p>
 
-              {game.link ? (
+              {/* ✅ 改成 Link，點擊會切換頁面 */}
+              {game.link === "#" ? (
+                <button className="card-button">{game.button}</button>
+              ) : (
                 <Link to={game.link} className="card-button">
                   {game.button}
                 </Link>
-              ) : (
-                <button className="card-button" type="button">
-                  {game.button}
-                </button>
               )}
             </div>
           ))}
@@ -67,3 +62,5 @@ export default function Games() {
     </section>
   );
 }
+
+export default Games;

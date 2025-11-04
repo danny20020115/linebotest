@@ -1,62 +1,69 @@
-// src/components/VR.jsx
-function VR() {
-  const features = [
-    { icon: "⚡", text: "更快的康復時間" },
-    { icon: "🛡️", text: "安全的虛擬環境" },
-    { icon: "👥", text: "個人化療程計劃" },
-  ];
+import { useEffect, useState } from "react";
 
-  const vrPrograms = [
-    { name: "運動技能訓練", status: "可預約" },
-    { name: "平衡與協調", status: "可預約" },
-    { name: "認知復健", status: "可預約" },
-  ];
+export default function VR() {
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/news")
+      .then((res) => res.json())
+      .then((data) => {
+        setNews(Array.isArray(data.items) ? data.items : []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("載入新聞錯誤:", err);
+        setLoading(false);
+      });
+  }, []);
 
   return (
-    <section id="vr" className="section section-gray">
+    <section id="vr" className="section bg-gray-50">
       <div className="container">
-        <div className="two-column">
-          {/* 左側內容 */}
-          <div className="column">
-            <h2 className="section-title">VR復健療程</h2>
-            <p className="section-description">
-              沉浸式虛擬實境環境，旨在加速康復過程，
-              讓各年齡層患者的復健變得有趣且有效。
-            </p>
+        <div className="section-header">
+          <h2 className="section-title">最新新聞</h2>
+          <p className="section-description">
+            透過即時新聞了解產業動態，掌握最新的科技與復健趨勢。
+          </p>
+        </div>
 
-            <div className="features-list">
-              {features.map((feature, index) => (
-                <div key={index} className="feature-item">
-                  <div className="feature-icon">{feature.icon}</div>
-                  <span>{feature.text}</span>
-                </div>
-              ))}
-            </div>
+        <div className="cards-grid">
+          {loading ? (
+            <p>載入中...</p>
+          ) : news.length === 0 ? (
+            <p>目前沒有新聞資料</p>
+          ) : (
+            news.map((item, index) => (
+              <div key={index} className="card card-blue">
+                <div className="card-icon">🗞️</div>
+                <h3 className="card-title">{item.title}</h3>
 
-            <button className="btn btn-teal">預約VR療程</button>
-          </div>
+                {/* 顯示科別與醫師 */}
+                {(item.department || item.doctor) && (
+                  <p className="card-meta">
+                    {item.department && <span>{item.department}</span>}
+                    {item.department && item.doctor && <span>｜</span>}
+                    {item.doctor && <span>{item.doctor}</span>}
+                  </p>
+                )}
 
-          {/* 右側內容 */}
-          <div className="column">
-            <div className="vr-demo">
-              <div className="demo-header">
-                <div className="demo-icon">🎧</div>
-                <h3>VR療程項目</h3>
+                <p className="card-description">
+                  {item.date}｜{item.source}
+                </p>
+
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card-button"
+                >
+                  閱讀更多 →
+                </a>
               </div>
-              <div className="demo-list">
-                {vrPrograms.map((program, index) => (
-                  <div key={index} className="demo-item">
-                    <span>{program.name}</span>
-                    <span className="status available">{program.status}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+            ))
+          )}
         </div>
       </div>
     </section>
   );
 }
-
-export default VR;
