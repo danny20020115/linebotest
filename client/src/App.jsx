@@ -1,6 +1,12 @@
 // client/src/App.jsx
-import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 
 import Header from "./components/Header";
 import Hero from "./components/Hero";
@@ -16,31 +22,36 @@ import HealthChat from "./pages/HealthChat.jsx";
 
 import "./styles.css";
 
-/** 首頁：支援 initialSection 或 URL hash 自動捲動 */
-function Home({ initialSection }) {
-  const location = useLocation();
-
-  useEffect(() => {
-    const target =
-      initialSection || (location.hash ? location.hash.replace("#", "") : "");
-    if (!target) return;
-
-    // 等待一個 frame，確保子元件 render 完成
-    requestAnimationFrame(() => {
-      const el = document.getElementById(target);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }, [initialSection, location.hash]);
-
+/** 首頁只有 Hero + Footer */
+function HomeOnlyHero() {
   return (
     <>
       <Hero />
-      {/* 請在這些元件的最外層各加上對應 id */}
-      {/* <section id="games"><Games/></section> 等同於在元件內加 id */}
-      <Games />      {/* 內層最外層要有 id="games" */}
-      <VR />         {/* id="vr" */}
-      <Assistant />  {/* id="assistant" */}
-      <Footer />     {/* id="contact"（如果聯絡區放 Footer） */}
+      
+    </>
+  );
+}
+
+/** ✅ 直接把 GamesPage 定義在這支檔案內（避免找不到檔案） */
+function GamesPage() {
+  const location = useLocation();
+
+  // 支援 /games#vr /games#assistant 平滑捲動
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.slice(1);
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, [location]);
+
+  return (
+    <>
+      <Games />      {/* id="games" 在元件內 */}
+      <VR />         {/* 最外層已是 id="vr" */}
+      <Assistant />  {/* 最外層已是 id="assistant" */}
+      <Footer />
     </>
   );
 }
@@ -53,24 +64,20 @@ export default function App() {
       <Header onLoginClick={() => setIsLoginOpen(true)} />
 
       <Routes>
-        {/* 首頁（含區塊版） */}
-        <Route path="/" element={<Home />} />
-        <Route path="/health" element={<Home />} />
+        {/* 首頁 */}
+        <Route path="/" element={<HomeOnlyHero />} />
 
-        {/* 直接導到特定區塊 */}
-        <Route path="/health/games" element={<Home initialSection="games" />} />
-        <Route path="/health/vr" element={<Home initialSection="vr" />} />
-        <Route path="/health/assistant" element={<Home initialSection="assistant" />} />
-        <Route path="/health/contact" element={<Home initialSection="contact" />} />
+        {/* /games：依序顯示 Games → VR → Assistant → Footer */}
+        <Route path="/games" element={<GamesPage />} />
 
-        {/* 其它頁面 */}
+        {/* 單獨的 AI 測驗頁 */}
         <Route path="/ai-game" element={<AIGame />} />
-        <Route path="/signup" element={<Signup />} />
 
-        {/* 獨立聊天室頁 */}
+        {/* 其他頁面 */}
+        <Route path="/signup" element={<Signup />} />
         <Route path="/health/chat" element={<HealthChat />} />
 
-        {/* 未匹配導回首頁 */}
+        {/* 兜底導回首頁 */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
