@@ -784,6 +784,7 @@ app.post("/api/assistant/chat", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // ---- 全域錯誤處理 ----
 app.use((err, req, res, next) => {
   console.error("🔥 Unhandled error:", err);
@@ -798,6 +799,59 @@ app.use((err, req, res, next) => {
   });
 });
 
+=======
+const axios = require("axios");
+const cheerio = require("cheerio");
+
+app.get("/api/news", async (req, res) => {
+  try {
+    const url = "https://www.landseedhospital.com.tw/tw/knowledge/knowledge_list";
+    const { data } = await axios.get(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36",
+      },
+    });
+
+    const $ = cheerio.load(data);
+    const items = [];
+
+    $(".c-table__list .c-table__item").each((i, el) => {
+      const date = $(el).find(".c-table__col-130").first().text().trim();
+      const department = $(el).find(".c-table__col-160").first().text().trim();
+      const doctor = $(el).find(".c-table__col-160").eq(1).text().trim();
+
+      const linkEl = $(el).find(".c-table__col-auto a");
+      const title = linkEl.text().trim();
+      let href = linkEl.attr("href") || "";
+
+      // 🧩 確保網址格式正確（避免 com.twtw）
+      if (href && !href.startsWith("http")) {
+        if (!href.startsWith("/")) href = "/" + href;
+        href = "https://www.landseedhospital.com.tw" + href;
+      }
+
+      if (title && href) {
+        items.push({
+          title,
+          date,
+          department,
+          doctor,
+          url: href,
+          source: "聯新國際醫院 健康園地",
+        });
+      }
+    });
+
+    res.json({ ok: true, items });
+  } catch (err) {
+    console.error("Crawler error:", err.message);
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+
+>>>>>>> 6a3ee65ce097440791b904dc67a72cb84d247cd8
 // ---- 啟動伺服器 ----
 const server = app.listen(PORT, () => {
   console.log(`✅ Server listening at http://localhost:${PORT}`);
