@@ -58,37 +58,53 @@ body {
 
 /* Hero Section */
 /* ===== Hero 區塊 ===== */
-.hero {
+.hero{
+  min-height: calc(100vh - var(--header-h));
+  padding-block: 24px;                 /* 上下留一點氣口 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;             /* 垂直置中內容 */
   background: linear-gradient(135deg, #dbeafe 0%, #ffffff 50%, #f0fdfa 100%);
-  padding: 180px 0 140px;        /* 上方保留給導覽列，下方留空 */
+  box-sizing: border-box;
 }
 
 /* ===== 跑馬燈（在文字上方） ===== */
 .hero-marquee {
   overflow: hidden;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 48px;           /* 與下方文字留距 */
-  height: 100px;                  /* 依你的圖片高度調整 */
+  max-width: 100%;       /* ✅ 改全寬讓圖片不被壓縮 */
+  height: 350px;         /* ✅ 想多高自己改，例如 300、350、400px */
+  margin: 0 auto 40px;
   position: relative;
 }
 
+
+/* 🔹 內部圖片排列要緊密 + 不能斷行 */
+/* ===== 軌道（動畫） ===== */
 .marquee-track {
   display: flex;
-  gap: 32px;
+  flex-wrap: nowrap;
   width: max-content;
-  animation: heroMarquee 20s linear infinite;
+  animation: heroMarquee 18s linear infinite; /* ✅ 這裡是重點 */
+  gap: 24px;
 }
-
 .hero-marquee:hover .marquee-track {
   animation-play-state: paused;   /* 滑鼠移上暫停 */
 }
-
+.hero-content p{
+  font-size: 1.8rem;                   /* ✅ 放大 */
+  color: #2563eb;                      /* ✅ 改藍色 */
+  margin-bottom: 28px; font-weight: 500;
+}
+/* 🔹 圖片一定要連在一起、沒有邊距 */
 .marquee-track img {
-  height: 100px;                  /* 與 .hero-marquee 高度一致 */
-  object-fit: contain;
-  user-select: none;
-  -webkit-user-drag: none;
+  height: 350px;         /* ✅ 配合容器高度 */
+  width: auto;           /* ✅ 保持比例 */
+  display: block;
+  object-fit: cover;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
 }
 
 @keyframes heroMarquee {
@@ -127,6 +143,15 @@ body {
   gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+/* ===== RWD ===== */
+@media (max-width: 768px) {
+  .hero { padding: 140px 0 100px; }
+  .hero-marquee { height: 72px; margin-bottom: 36px; }
+  .marquee-track img { height: 72px; }
+  .hero-title { font-size: 3rem; }
+  .hero-description { font-size: 1.2rem; }
 }
 
 /* ===== RWD ===== */
@@ -722,34 +747,112 @@ body {
 /* ==== Header / Nav — 唯一版（請放在 styles.css 最底） ==== */
 
 /* 外層 Header */
-.header{
-    display: flex;
-  background:#fff;
-  position:sticky; top:0; z-index:1000;
-  border-bottom:1px solid #eef2f7;
-  box-shadow:0 2px 12px rgba(17,24,39,.04);
+/* ===== Header（整合精簡版） ===== */
+/* ===== Header ===== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eef2f7;
+  box-shadow: 0 2px 12px rgba(17,24,39,.04);
 }
 
-.header {
-    width: 100%;                /* 讓 header 佔滿整個寬度 */
-    background: #ffffff;        /* 你可以改成想要的顏色 */
-    border-bottom: 1px solid #e5e7eb;
-}
 
 .header .nav-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 50px;
-    width: 100%;             /* 撐滿整個畫面寬度 */
-    max-width: none;         /* 取消寬度限制 */
-    padding: 0 20px;
+  display: flex;
+  align-items: center;          /* 垂直置中所有內容 */
+  justify-content: space-between;
+  height: 90px;                 /* header 高度（想整組再低一點就加大） */
+  padding: 0 20px;              /* 左右內距 */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Logo 區 */
-.header .logo{display:flex; align-items:center; gap:10px; min-width:0;}
-.header .logo-icon{background:#2563eb; color:#fff; border-radius:12px; padding:8px; font-size:20px;}
-.header .logo-text{font-size:18px; font-weight:700; color:#111827; white-space:nowrap}
+/* --- Logo：圖片 + 文字 --- */
+.header .logo {
+  display: flex;
+  align-items: center;          /* 圖片和文字垂直對齊 */
+  gap: 16px;
+  text-decoration: none;        /* 沒底線 */
+}
+
+/* Logo 圖片放大 */
+.header .logo-img {
+  height: 72px;                 /* 想再大就調這裡 */
+  width: auto;
+  display: block;
+  object-fit: contain;
+  /* ❌ 不再用 margin-top，避免和登入高度不一致 */
+}
+
+/* 顯示品牌文字 */
+.header .logo-text {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  /* ❌ 拿掉 margin-top，讓它跟登入一起置中 */
+}
+
+/* 如果還有舊的 icon 才隱藏它 */
+.header .logo-icon {
+  display: none;
+}
+/* --- 導覽列：已拿掉，保險起見直接隱藏 --- */
+.header .nav {
+  display: none !important;
+}
+
+/* --- 右側登入按鈕 --- */
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 9999px;
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s ease;
+  outline: none;
+}
+.login-btn:hover {
+  filter: brightness(0.95);
+}
+.login-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+.hello{
+  margin-right: 10px;
+  color:#374151;
+  font-size: 0.95rem;
+}
+
+/* --- RWD 細節 --- */
+@media (max-width: 640px){
+  .header .nav-wrapper{
+    height: 60px;
+    padding: 0 12px;
+  }
+  .header .logo-img{
+    height: 42px;
+  }
+  .header .logo-text{
+    font-size: 20px;
+  }
+  .hello{
+    display: none;  /* 手機上只留按鈕 */
+  }
+}
+
+
 
 /* 導覽列：永遠橫排、字不要太大 */
 .header .nav{

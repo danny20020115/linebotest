@@ -14,12 +14,12 @@ export default function Games() {
     },
     {
       icon: "Target",
-      title: "手術模擬",
+      title: "健康管家",
       description:
         "在無風險的虛擬環境中練習手術程序，並獲得即時反饋。",
       button: "開始訓練 ->",
       className: "card card-teal",
-      link: "/surgery-sim"
+      link: "/health-keeper"
     },
     {
       icon: "Gamepad",

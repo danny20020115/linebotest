@@ -1,7 +1,8 @@
 // =============================================
-// server/server.js  (整檔覆蓋)
+// server/server.js  (整檔覆蓋版)
 // 強制以 server/.env 的值覆蓋任何系統環境變數
-// 含：Auth(註冊/登入/JWT) + 題目產生(AI/本地) + 測驗寫入/查詢 + 助手 + 診斷 + 健康檢查
+// 含：Auth(註冊/登入/JWT) + 題目產生(AI/本地) + 測驗寫入/查詢
+//   + 助手 + 診斷 + 健康檢查 + 健康紀錄
 // =============================================
 
 const path = require("path");
@@ -24,6 +25,7 @@ for (const k of [
 ]) {
   if (envFromFile[k] !== undefined) process.env[k] = envFromFile[k];
 }
+console.log("[db] using host=", process.env.DB_HOST, " db=", process.env.DB_NAME);
 
 // ---- 基本中介層 ----
 const express = require("express");
@@ -82,12 +84,12 @@ app.post("/api/auth/signup", async (req, res) => {
       username,
       email,
       password,
-      gender,     // 'male' | 'female' | 'other'
-      birthday,   // 'YYYY-MM-DD'
-      height,     // cm
-      weight,     // kg
+      gender, // 'male' | 'female' | 'other'
+      birthday, // 'YYYY-MM-DD'
+      height, // cm
+      weight, // kg
       notes,
-      diseases,   // 陣列，如 ["糖尿病","高血壓"] 或 ["無"]
+      diseases, // 陣列，如 ["糖尿病","高血壓"] 或 ["無"]
     } = req.body || {};
 
     if (!username || !email || !password || !gender || !birthday || !height || !weight) {
@@ -108,8 +110,8 @@ app.post("/api/auth/signup", async (req, res) => {
 
     if (Array.isArray(diseases) && diseases.length && !diseases.includes("無")) {
       const values = diseases
-        .filter(d => typeof d === "string" && d.trim())
-        .map(d => [userId, d.trim()]);
+        .filter((d) => typeof d === "string" && d.trim())
+        .map((d) => [userId, d.trim()]);
       if (values.length) {
         await pool.query(`INSERT INTO user_diseases (user_id, label) VALUES ?`, [values]);
       }
@@ -119,7 +121,15 @@ app.post("/api/auth/signup", async (req, res) => {
     return res.json({
       ok: true,
       token,
-      user: { id: userId, email, username, gender, birthday, height_cm: Number(height), weight_kg: Number(weight) },
+      user: {
+        id: userId,
+        email,
+        username,
+        gender,
+        birthday,
+        height_cm: Number(height),
+        weight_kg: Number(weight),
+      },
     });
   } catch (e) {
     console.error("signup error:", e);
@@ -188,9 +198,9 @@ try {
 
   console.log("[assistant] OpenAI SDK loaded");
   console.log(
-    `[assistant] key prefix: ${rawKey ? rawKey.slice(0, 8) + "…" : "(none)"} | type: ${
-      usingProjKey ? "project-key" : rawKey ? "user-key" : "none"
-    }`
+    `[assistant] key prefix: ${
+      rawKey ? rawKey.slice(0, 8) + "…" : "(none)"
+    } | type: ${usingProjKey ? "project-key" : rawKey ? "user-key" : "none"}`
   );
 } catch {
   console.log("[assistant] openai SDK not installed; assistant will use local replies.");
@@ -232,11 +242,11 @@ app.get("/api/assistant/diag", async (_req, res) => {
 
 // 除錯：顯示目前 key 前後碼與長度
 app.get("/api/assistant/which-key", (_req, res) => {
-  const k = (process.env.OPENAI_API_KEY || "");
+  const k = process.env.OPENAI_API_KEY || "";
   res.json({ prefix: k.slice(0, 12), suffix: k.slice(-8), length: k.length });
 });
 
-// ---- 健康檢查 ----
+// ---- 健康檢查（很簡單的 DB ping）----
 app.get("/api/health", async (_req, res) => {
   try {
     const [rows] = await pool.query("SELECT 1 AS ok");
@@ -246,22 +256,240 @@ app.get("/api/health", async (_req, res) => {
   }
 });
 
+// ===================================================
+// 健康紀錄 API：血壓 / 血糖 / BMI
+// 對應資料表：blood_pressure, blood_sugar, bmi_record
+// 前端統一呼叫：POST/GET /api/health/:mode   (mode = bp | bs | bmi)
+// ===================================================
+
+// 把民國年月日時分轉成西元 DATETIME 字串 (YYYY-MM-DD HH:MM:SS)
+function buildDateTimeFromROC(body) {
+  const rocYear = Number(body.rocYear);
+  const month = Number(body.month);
+  const day = Number(body.day);
+  const hour = Number(body.hour || 0);
+  const minute = Number(body.minute || 0);
+
+  if (!rocYear || !month || !day) {
+    throw new Error("日期格式錯誤（rocYear / month / day 必填）");
+  }
+
+  const year = rocYear + 1911;
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${year}-${pad(month)}-${pad(day)} ${pad(hour)}:${pad(minute)}:00`;
+}
+
+// 把 range=1m/3m/6m/1y 轉成「從哪一天開始」
+function getSinceByRange(range) {
+  const now = new Date();
+  const d = new Date(now.getTime());
+  switch (range) {
+    case "1m":
+      d.setMonth(d.getMonth() - 1);
+      break;
+    case "3m":
+      d.setMonth(d.getMonth() - 3);
+      break;
+    case "6m":
+      d.setMonth(d.getMonth() - 6);
+      break;
+    case "1y":
+      d.setFullYear(d.getFullYear() - 1);
+      break;
+    default:
+      // 預設三個月
+      d.setMonth(d.getMonth() - 3);
+  }
+  // MySQL DATETIME 格式
+  return d.toISOString().slice(0, 19).replace("T", " ");
+}
+
+// ---- 簡單 ping，方便測試（一定要寫在 :mode 之前）----
+app.get("/api/health/ping", (_req, res) => {
+  res.json({ ok: true, from: "health-api" });
+});
+
+// --------- 統一：新增健康資料 ---------
+app.post("/api/health/:mode", async (req, res) => {
+  const { mode } = req.params; // 'bp' | 'bs' | 'bmi'
+  const { value1, value2, value3 } = req.body || {};
+
+  let record_datetime;
+  try {
+    record_datetime = buildDateTimeFromROC(req.body);
+  } catch (e) {
+    return res.status(400).json({ ok: false, error: e.message });
+  }
+
+  try {
+    if (mode === "bp") {
+      // 血壓
+      if (!value1 || !value2 || !value3) {
+        return res
+          .status(400)
+          .json({ ok: false, error: "收縮壓 / 舒張壓 / 心跳 必填" });
+      }
+
+      await pool.execute(
+        `INSERT INTO blood_pressure (record_datetime, systolic, diastolic, heartbeat)
+         VALUES (?, ?, ?, ?)`,
+        [record_datetime, Number(value1), Number(value2), Number(value3 || 0)]
+      );
+    } else if (mode === "bs") {
+      // 血糖
+      if (!value1) {
+        return res.status(400).json({ ok: false, error: "血糖值必填" });
+      }
+
+      await pool.execute(
+        `INSERT INTO blood_sugar (record_datetime, sugar_value, measure_period, note)
+         VALUES (?, ?, ?, ?)`,
+        [record_datetime, Number(value1), value2 || "", value3 || null]
+      );
+    } else if (mode === "bmi") {
+      // BMI
+      if (!value1 || !value2) {
+        return res
+          .status(400)
+          .json({ ok: false, error: "身高與體重必填（BMI 會自動計算）" });
+      }
+      const height_cm = Number(value1);
+      const weight_kg = Number(value2);
+      const bmi =
+        value3 && !Number.isNaN(Number(value3))
+          ? Number(value3)
+          : Number((weight_kg / Math.pow(height_cm / 100, 2)).toFixed(1));
+
+      await pool.execute(
+        `INSERT INTO bmi_record (record_datetime, height_cm, weight_kg, bmi_value)
+         VALUES (?, ?, ?, ?)`,
+        [record_datetime, height_cm, weight_kg, bmi]
+      );
+    } else {
+      return res.status(400).json({ ok: false, error: "Unknown mode" });
+    }
+
+    return res.json({ ok: true });
+  } catch (e) {
+    console.error("save health error:", e);
+    return res
+      .status(500)
+      .json({ ok: false, error: "DB 錯誤：" + (e.message || e) });
+  }
+});
+
+// --------- 統一：讀取健康資料（列表 / 圖表）---------
+app.get("/api/health/:mode", async (req, res) => {
+  const { mode } = req.params;
+  const range = req.query.range || null;
+
+  try {
+    let rows;
+    let sqlBase = "";
+    let params = [];
+
+    if (mode === "bp") {
+      sqlBase = `SELECT record_datetime, systolic AS v1, diastolic AS v2, heartbeat AS v3
+                 FROM blood_pressure`;
+    } else if (mode === "bs") {
+      sqlBase = `SELECT record_datetime, sugar_value AS v1, measure_period AS v2, note AS v3
+                 FROM blood_sugar`;
+    } else if (mode === "bmi") {
+      sqlBase = `SELECT record_datetime, height_cm AS v1, weight_kg AS v2, bmi_value AS v3
+                 FROM bmi_record`;
+    } else {
+      return res.status(400).json({ ok: false, error: "Unknown mode" });
+    }
+
+    if (range) {
+      const since = getSinceByRange(range);
+      sqlBase += ` WHERE record_datetime >= ?`;
+      params.push(since);
+    }
+
+    sqlBase += ` ORDER BY record_datetime ASC`;
+
+    [rows] = await pool.execute(sqlBase, params);
+
+    res.json({
+      ok: true,
+      range: range || undefined,
+      items: rows.map((r) => {
+        const d =
+          r.record_datetime instanceof Date
+            ? r.record_datetime
+            : new Date(r.record_datetime);
+        const iso = d.toISOString();
+        const dateTime = iso.slice(0, 10) + " " + iso.slice(11, 16); // YYYY-MM-DD HH:MM
+
+        return {
+          dateTime,
+          v1: r.v1,
+          v2: r.v2,
+          v3: r.v3,
+        };
+      }),
+    });
+  } catch (e) {
+    console.error("fetch health error:", e);
+    res
+      .status(500)
+      .json({ ok: false, error: "DB 錯誤：" + (e.message || e) });
+  }
+});
+
+
+
+
 // ---- 題目產生（優先用 OpenAI；失敗改本地）----
 app.post("/api/game/generate", async (req, res) => {
-  const { topic = "健康知識", difficulty = "medium", count: rawCount = 5 } = req.body || {};
+  const { topic = "健康知識", difficulty = "medium", count: rawCount = 5 } =
+    req.body || {};
   const count = Math.max(1, Math.min(20, Number(rawCount) || 5));
 
   const localBase = [
-    { q: "水每天至少要喝多少較健康？", opts: ["100ml", "500ml", "1500~2000ml", "3000ml"], a: 2, exp: "一般建議成人每日約1500~2000ml，視活動量調整。" },
-    { q: "哪個動作有助於緩解肩頸痠痛？", opts: ["長時間低頭滑手機", "溫和伸展", "整天躺著", "只喝能量飲"], a: 1, exp: "定時做肩頸伸展、活動關節可緩解緊繃。" },
-    { q: "良好睡眠建議每晚約？", opts: ["3-4小時", "5-6小時", "7-9小時", "10-12小時"], a: 2, exp: "多數成人建議7~9小時。" },
-    { q: "心肺有氧運動建議每週至少？", opts: ["30分鐘", "60分鐘", "150分鐘", "300分鐘"], a: 2, exp: "多數指引建議每週至少150分鐘中等強度。" },
-    { q: "下列何者是常見腰痛的保護動作？", opts: ["彎腰搬重物", "背部打直蹲下起身", "猛然扭轉身體", "長時間保持同一姿勢"], a: 1, exp: "蹲下、靠近重量、背打直再起身可減少負擔。" },
+    {
+      q: "水每天至少要喝多少較健康？",
+      opts: ["100ml", "500ml", "1500~2000ml", "3000ml"],
+      a: 2,
+      exp: "一般建議成人每日約1500~2000ml，視活動量調整。",
+    },
+    {
+      q: "哪個動作有助於緩解肩頸痠痛？",
+      opts: ["長時間低頭滑手機", "溫和伸展", "整天躺著", "只喝能量飲"],
+      a: 1,
+      exp: "定時做肩頸伸展、活動關節可緩解緊繃。",
+    },
+    {
+      q: "良好睡眠建議每晚約？",
+      opts: ["3-4小時", "5-6小時", "7-9小時", "10-12小時"],
+      a: 2,
+      exp: "多數成人建議7~9小時。",
+    },
+    {
+      q: "心肺有氧運動建議每週至少？",
+      opts: ["30分鐘", "60分鐘", "150分鐘", "300分鐘"],
+      a: 2,
+      exp: "多數指引建議每週至少150分鐘中等強度。",
+    },
+    {
+      q: "下列何者是常見腰痛的保護動作？",
+      opts: ["彎腰搬重物", "背部打直蹲下起身", "猛然扭轉身體", "長時間保持同一姿勢"],
+      a: 1,
+      exp: "蹲下、靠近重量、背打直再起身可減少負擔。",
+    },
   ];
+
   const toLocal = () => {
     const questions = Array.from({ length: count }).map((_, i) => {
       const it = localBase[i % localBase.length];
-      return { id: i + 1, question: it.q, options: it.opts, answerIndex: it.a, explanation: it.exp };
+      return {
+        id: i + 1,
+        question: it.q,
+        options: it.opts,
+        answerIndex: it.a,
+        explanation: it.exp,
+      };
     });
     return res.json({ questions });
   };
@@ -286,7 +514,8 @@ app.post("/api/game/generate", async (req, res) => {
     const r = await openaiClient.chat.completions.create({
       model,
       response_format: { type: "json_object" },
-      temperature: difficulty === "hard" ? 0.9 : difficulty === "easy" ? 0.5 : 0.7,
+      temperature:
+        difficulty === "hard" ? 0.9 : difficulty === "easy" ? 0.5 : 0.7,
       messages: [
         { role: "system", content: system },
         { role: "user", content: user },
@@ -301,7 +530,9 @@ app.post("/api/game/generate", async (req, res) => {
       return toLocal();
     }
 
-    const items = Array.isArray(data.questions) ? data.questions.slice(0, count) : [];
+    const items = Array.isArray(data.questions)
+      ? data.questions.slice(0, count)
+      : [];
     const cleaned = items
       .map((q, i) => {
         const opts = Array.isArray(q.options) ? q.options.slice(0, 4) : [];
@@ -311,14 +542,18 @@ app.post("/api/game/generate", async (req, res) => {
           opts.length !== 4 ||
           !opts.every((s) => typeof s === "string" && s.trim()) ||
           !(ans >= 0 && ans < 4)
-        ) return null;
+        )
+          return null;
 
         return {
           id: i + 1,
           question: q.question.trim(),
           options: opts.map((s) => s.trim()),
           answerIndex: ans,
-          explanation: typeof q.explanation === "string" ? q.explanation.trim() : "",
+          explanation:
+            typeof q.explanation === "string"
+              ? q.explanation.trim()
+              : "",
         };
       })
       .filter(Boolean);
@@ -326,7 +561,13 @@ app.post("/api/game/generate", async (req, res) => {
     if (cleaned.length === 0) return toLocal();
     while (cleaned.length < count) {
       const it = localBase[cleaned.length % localBase.length];
-      cleaned.push({ id: cleaned.length + 1, question: it.q, options: it.opts, answerIndex: it.a, explanation: it.exp });
+      cleaned.push({
+        id: cleaned.length + 1,
+        question: it.q,
+        options: it.opts,
+        answerIndex: it.a,
+        explanation: it.exp,
+      });
     }
 
     return res.json({ questions: cleaned.slice(0, count) });
@@ -496,7 +737,11 @@ app.get("/api/quiz/history", async (req, res) => {
 
 // ---- 可選：GET / ----
 app.get("/", (_req, res) => {
-  res.type("text").send("API running. Try GET /api/health, /api/assistant/diag or POST /api/game/generate");
+  res
+    .type("text")
+    .send(
+      "API running. Try GET /api/health, /api/health/:mode, /api/assistant/diag or POST /api/game/generate"
+    );
 });
 
 // ==== AI 助手：POST /api/assistant/chat（失敗自動降級） ====
@@ -537,6 +782,20 @@ app.post("/api/assistant/chat", async (req, res) => {
     });
     return res.json({ reply: localReply(message), mode: "local-fallback" });
   }
+});
+
+// ---- 全域錯誤處理 ----
+app.use((err, req, res, next) => {
+  console.error("🔥 Unhandled error:", err);
+
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  res.status(500).json({
+    ok: false,
+    error: err && err.message ? err.message : "Server error",
+  });
 });
 
 // ---- 啟動伺服器 ----

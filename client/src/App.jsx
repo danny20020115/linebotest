@@ -15,24 +15,25 @@ import VR from "./components/VR";
 import Assistant from "./components/Assistant";
 import Footer from "./components/Footer";
 import LoginModal from "./components/LoginModal";
+import HealthKeeper from "./pages/HealthKeeper"; // 健康管家頁面
 
 import AIGame from "./pages/AIGame";
 import Signup from "./pages/Signup.jsx";
 import HealthChat from "./pages/HealthChat.jsx";
 
 import "./styles.css";
+import "./pages/HealthKeeper.css"; // ✅ 全域匯入健康管家的 CSS（重點）
 
-/** 首頁只有 Hero + Footer */
+/** 首頁：目前只有 Hero */
 function HomeOnlyHero() {
   return (
     <>
       <Hero />
-      
     </>
   );
 }
 
-/** ✅ 直接把 GamesPage 定義在這支檔案內（避免找不到檔案） */
+/** /games：AI 遊戲 + VR + 助理 + Footer */
 function GamesPage() {
   const location = useLocation();
 
@@ -48,9 +49,9 @@ function GamesPage() {
 
   return (
     <>
-      <Games />      {/* id="games" 在元件內 */}
-      <VR />         {/* 最外層已是 id="vr" */}
-      <Assistant />  {/* 最外層已是 id="assistant" */}
+      <Games />
+      <VR />
+      <Assistant />
       <Footer />
     </>
   );
@@ -67,10 +68,13 @@ export default function App() {
         {/* 首頁 */}
         <Route path="/" element={<HomeOnlyHero />} />
 
-        {/* /games：依序顯示 Games → VR → Assistant → Footer */}
+        {/* 遊戲總頁（AI 遊戲 + VR + 助理） */}
         <Route path="/games" element={<GamesPage />} />
 
-        {/* 單獨的 AI 測驗頁 */}
+        {/* 健康管家頁面 */}
+        <Route path="/health-keeper" element={<HealthKeeper />} />
+
+        {/* 單獨 AI 測驗頁 */}
         <Route path="/ai-game" element={<AIGame />} />
 
         {/* 其他頁面 */}
@@ -81,7 +85,10 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
-      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+      />
     </BrowserRouter>
   );
 }

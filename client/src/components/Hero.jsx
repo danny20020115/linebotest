@@ -9,12 +9,15 @@ function Hero() {
       <div className="hero-marquee">
         <div className="marquee-track">
           {/* ✅ 第一輪圖片 */}
-          <img src="/images/doctor4.png" alt="banner1" />
-          <img src="/images/doctor1.png" alt="banner2" />
-          <img src="/images/doctor2.png" alt="banner3" />
-          <img src="/images/doctor3.png" alt="banner4" />
+          <img src="/images/doctor1.png" alt="doctor1" />
+          <img src="/images/doctor2.png" alt="doctor2" />
+          <img src="/images/doctor3.png" alt="doctor3" />
+          <img src="/images/doctor4.png" alt="doctor4" />
           {/* ✅ 無縫輪播：複製一份 */}
-          <img src="/images/doctor.png" alt="banner1" />
+          <img src="/images/doctor1.png" alt="doctor1" />
+          <img src="/images/doctor2.png" alt="doctor2" />
+          <img src="/images/doctor3.png" alt="doctor3" />
+          <img src="/images/doctor4.png" alt="doctor4" />
           
         </div>
       </div>
