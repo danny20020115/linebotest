@@ -784,7 +784,7 @@ app.post("/api/assistant/chat", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
+
 // ---- 全域錯誤處理 ----
 app.use((err, req, res, next) => {
   console.error("🔥 Unhandled error:", err);
@@ -799,7 +799,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-=======
+
 const axios = require("axios");
 const cheerio = require("cheerio");
 
@@ -851,7 +851,7 @@ app.get("/api/news", async (req, res) => {
 });
 
 
->>>>>>> 6a3ee65ce097440791b904dc67a72cb84d247cd8
+
 // ---- 啟動伺服器 ----
 const server = app.listen(PORT, () => {
   console.log(`✅ Server listening at http://localhost:${PORT}`);

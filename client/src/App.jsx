@@ -15,16 +15,17 @@ import VR from "./components/VR";
 import Assistant from "./components/Assistant";
 import Footer from "./components/Footer";
 import LoginModal from "./components/LoginModal";
-import HealthKeeper from "./pages/HealthKeeper"; // 健康管家頁面
 
+import HealthKeeper from "./pages/HealthKeeper"; // 健康管家頁面
+import MedicalBodyMap from "./pages/MedicalBodyMap"; // 🔥 新增互動人體頁面
 import AIGame from "./pages/AIGame";
 import Signup from "./pages/Signup.jsx";
 import HealthChat from "./pages/HealthChat.jsx";
 
 import "./styles.css";
-import "./pages/HealthKeeper.css"; // ✅ 全域匯入健康管家的 CSS（重點）
+import "./pages/HealthKeeper.css";
 
-/** 首頁：目前只有 Hero */
+/** 首頁（只有 Hero） */
 function HomeOnlyHero() {
   return (
     <>
@@ -62,29 +63,34 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      {/* 所有頁面都會先看到 Header */}
       <Header onLoginClick={() => setIsLoginOpen(true)} />
 
       <Routes>
         {/* 首頁 */}
         <Route path="/" element={<HomeOnlyHero />} />
 
-        {/* 遊戲總頁（AI 遊戲 + VR + 助理） */}
+        {/* 遊戲主頁（AI遊戲 + VR + 助理） */}
         <Route path="/games" element={<GamesPage />} />
 
-        {/* 健康管家頁面 */}
+        {/* 健康管家 */}
         <Route path="/health-keeper" element={<HealthKeeper />} />
 
-        {/* 單獨 AI 測驗頁 */}
+        {/* AI Game */}
         <Route path="/ai-game" element={<AIGame />} />
 
-        {/* 其他頁面 */}
+        {/* 🔥 新增互動人體疾病地圖頁 */}
+        <Route path="/MedicalBodyMap" element={<MedicalBodyMap />} />
+
+        {/* 註冊 / 健康小助手聊天 */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/health/chat" element={<HealthChat />} />
 
-        {/* 兜底導回首頁 */}
+        {/* 兜底：全部導回首頁 */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
+      {/* 登入 Modal */}
       <LoginModal
         isOpen={isLoginOpen}
         onClose={() => setIsLoginOpen(false)}

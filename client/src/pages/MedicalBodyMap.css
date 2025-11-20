@@ -1,0 +1,294 @@
+/* ====== 互動人體疾病地圖：整體頁面 ====== */
+
+.body-map-page {
+  min-height: 100vh;
+  background: #f3f4f6;
+  padding: 40px 0;
+}
+
+.body-map-page-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.body-map-page-header {
+  margin-bottom: 24px;
+}
+
+.body-map-page-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.body-map-page-text {
+  font-size: 16px;
+  color: #4b5563;
+}
+
+.body-map-page-card {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  padding: 24px;
+}
+
+/* ====== 主要版面：左邊按鈕 + 中間人形 + 右邊資訊 ====== */
+
+.body-map-layout {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+@media (max-width: 768px) {
+  .body-map-layout {
+    flex-direction: column;
+  }
+}
+
+/* 左側按鈕列 */
+
+.body-map-sidebar {
+  width: 130px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.body-map-sidebar-title {
+  font-size: 16px;       /* ← 原本 14 */
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+.body-map-sidebar-btn {
+  width: 100%;
+  font-size: 14px;       /* ← 原本 12 */
+  padding: 8px 10px;     /* 高一點 */
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.body-map-sidebar-btn:hover {
+  background: #f3f4ff;
+  border-color: #2563eb;
+}
+
+.body-map-sidebar-btn-active {
+  background: #f97316;
+  border-color: #f97316;
+  color: #ffffff;
+}
+
+/* ====== 中間：人體圖與節點 ====== */
+
+.body-map-figure-wrapper {
+  position: relative;
+  flex: 1;
+  max-width: 420px;         /* ← 寬一點 */
+  margin: 0 auto;
+  aspect-ratio: 3 / 4;      /* 比例維持接近原站 */
+}
+.body-map-figure {
+  position: absolute;
+  inset: 18%;              /* ← 原本是 6%，改成 10% 讓人縮小 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 人形容器 */
+
+.body-human {
+  position: relative;
+  width: 50%;
+  height: 100%;
+}
+
+/* 頭 */
+
+.body-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52%;
+  aspect-ratio: 1 / 1;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #4ade80, #16a34a);
+  box-shadow: 0 5px 10px rgba(8, 8, 7, 0.5);
+}
+
+/* 上半身（手 + 軀幹） */
+
+/* 上半身（手 + 軀幹） */
+.body-upper {
+  position: absolute;
+  top: 22%;          /* ← 原本 24，往上提 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.body-torso {
+  width: 42%;
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #4ade80, #16a34a);
+  box-shadow: 0 10px 20px rgba(22, 163, 74, 0.6);
+}
+
+.body-arm {
+  width: 18%;        /* 再細一點 */
+  height: 82%;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #4ade80, #16a34a);
+  box-shadow: 0 6px 12px rgba(22, 163, 74, 0.5);
+}
+
+.body-arm-left {
+  transform-origin: top right;
+  transform: rotate(20deg);
+}
+
+.body-arm-right {
+  transform-origin: top left;
+  transform: rotate(-20deg);
+}
+
+/* 下半身（腿） */
+
+.body-lower {
+  position: absolute;
+  bottom: 4%;        /* 腳稍微離底邊一點 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 35%;       /* ← 原本 45，腳變短 */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+
+.body-leg {
+  width: 24%;
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #4ade80, #16a34a);
+  box-shadow: 0 10px 22px rgba(22, 163, 74, 0.6);
+}
+
+.body-leg-left {
+  transform-origin: top right;
+  transform: rotate(10deg);
+}
+
+.body-leg-right {
+  transform-origin: top left;
+  transform: rotate(-10deg);
+}
+
+/* 節點（圓形按鈕） */
+
+.body-map-node {
+  position: absolute;
+  width: 82px;
+  height: 82px;
+  border-radius: 9999px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  z-index: 1;
+}
+
+.body-map-node:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.26);
+}
+
+.body-map-node-active {
+  border-color: #f97316;
+  color: #ea580c;
+  font-weight: 600;
+}
+
+.body-map-node-icon {
+  font-size: 22px;         /* ← icon 也放大 */
+  margin-bottom: 4px;
+}
+
+.body-map-node-label {
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ====== 右側資訊欄 ====== */
+
+.body-map-info {
+  width: 260px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #374151;
+}
+
+@media (max-width: 768px) {
+  .body-map-info {
+    width: 100%;
+  }
+}
+
+.body-map-info-hint {
+  font-size: 12px;      /* ← 原本 11 */
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+
+.body-map-info-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.body-map-info-desc {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.body-map-info-subtitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.body-map-info-list {
+  list-style: disc;
+  padding-left: 18px;
+  font-size: 14px;
+}
