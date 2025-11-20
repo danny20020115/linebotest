@@ -26,7 +26,7 @@ function Games() {
       description: "引人入勝的遊戲，幫助患者了解他們的病情和治療計劃。",
       button: "探索遊戲 →",
       className: "card card-green",
-      link: null, // 不跳頁，內嵌人體圖
+      link: "/ai-game", // 不跳頁，內嵌人體圖
     },
   ];
 
@@ -45,27 +45,13 @@ function Games() {
             <div key={index} className={game.className}>
               <div className="card-icon">{game.icon}</div>
               <h3 className="card-title">{game.title}</h3>
-
-              {game.title === "患者教育" ? (
-                <>
-                  <p className="card-description">
-                    點選人體周圍的部位，查看對應的疾病與衛教資訊。
-                  </p>
-                  <div className="mt-4 h-[360px]">
-                    <BodyMapWidget />
-                  </div>
-                </>
+               <p className="card-description">{game.description}</p>
+               {game.link ? (
+                <Link to={game.link} className="card-button">
+                  {game.button}
+                </Link>
               ) : (
-                <>
-                  <p className="card-description">{game.description}</p>
-                  {game.link ? (
-                    <Link to={game.link} className="card-button">
-                      {game.button}
-                    </Link>
-                  ) : (
-                    <button className="card-button">{game.button}</button>
-                  )}
-                </>
+                <button className="card-button">{game.button}</button>
               )}
             </div>
           ))}
@@ -74,5 +60,4 @@ function Games() {
     </section>
   );
 }
-
 export default Games;
