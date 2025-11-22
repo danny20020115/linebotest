@@ -1,12 +1,13 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+// client/src/setupProxy.js
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
-module.exports = function(app) {
-  // 可暫時加這行確認有載入
-  console.log('[proxy] /api -> http://localhost:3001');
+
+module.exports = function (app) {
+  console.log("[proxy] /api -> http://localhost:3001");
   app.use(
-    '/api',
+    "/api",
     createProxyMiddleware({
-      target: 'http://localhost:3001',
+      target: "http://localhost:3001",
       changeOrigin: true,
     })
   );

@@ -1,0 +1,327 @@
+/* ===========================
+   HealthKeeper（健康管家）
+   醫療系統介面風 CSS
+   =========================== */
+
+.healthkeeper-page {
+  min-height: 100vh;
+  padding: 12px;
+  background-color: #8fc8e6;
+  display: flex;
+  justify-content: center;
+}
+
+/* 讓上方三顆按鈕 + 面板一起置中 */
+.healthkeeper-page > div {
+  margin-top: 16px;
+}
+
+.healthkeeper-panel {
+  width: 100%;
+  max-width: 480px;
+  background-color: #a8d4f0;
+  border: 1px solid #6d9bbf;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  font-size: 14px;
+  color: #00325b;
+}
+
+/* 大標：彭柏洋先生健康資料 */
+.hk-main-title-bar {
+  background-color: #224f8f;
+  color: #ffffff;
+  text-align: center;
+  padding: 8px 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* 上方工具列 */
+.hk-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 10px;
+  background-color: #bcdcf5;
+}
+
+.hk-toolbar-left {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+.hk-toolbar-right {
+  display: flex;
+  gap: 8px;
+}
+
+/* 下拉選單 */
+.hk-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #7fb2d9;
+  background-color: #d7f6d7;
+  font-size: 14px;
+  color: #00325b;
+}
+
+/* 小標：新增 */
+.hk-subtitle-bar {
+  background-color: #224f8f;
+  color: #ffffff;
+  text-align: center;
+  padding: 4px 8px;
+  font-weight: 600;
+}
+
+/* 表單 */
+.hk-form {
+  padding: 8px 10px 12px;
+  background-color: #a8d4f0;
+}
+
+/* 每一列 */
+.hk-form-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  margin-bottom: 6px;
+}
+
+.hk-label {
+  background-color: #224f8f;
+  color: #ffffff;
+  padding: 6px 4px;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.hk-field {
+  background-color: #d0e9ff;
+  padding: 4px 4px;
+}
+
+.hk-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px 6px;
+  border-radius: 3px;
+  border: 1px solid #b4cde0;
+  background-color: #ffffff;
+  font-size: 14px;
+}
+
+/* 年月日 */
+.hk-inline-inputs {
+  display: flex;
+  gap: 4px;
+}
+
+.hk-inline-inputs .hk-input {
+  flex: 1;
+  text-align: center;
+}
+
+/* 時間 */
+.hk-time-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 異常值 */
+.hk-hint {
+  padding: 6px 10px;
+  font-size: 12px;
+  color: #002b4d;
+  background-color: #c5e2ff;
+}
+
+/* 下方按鈕 */
+.hk-footer-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 10px 12px;
+  background-color: #a8d4f0;
+}
+
+/* 主按鈕（存檔、重填、離開） */
+.hk-btn {
+  min-width: 80px;
+  padding: 6px 0;
+  border-radius: 6px;
+  border: 1px solid #2a4f86;
+  background: linear-gradient(to bottom, #4a7dd5, #264b85);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.hk-btn:hover {
+  filter: brightness(1.06);
+}
+
+.hk-btn:active {
+  transform: translateY(1px);
+}
+
+/* 小按鈕（新增、查詢、圖表） */
+.hk-btn-small {
+  min-width: 64px;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+/* ===========================
+   上方三個模式切換按鈕：血壓 / 血糖 / BMI
+   =========================== */
+
+.hk-top-tabs {
+  margin: 0 auto 8px;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.hk-top-tab {
+  min-width: 80px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #2a4f86;
+  background-color: #f2f6ff;
+  color: #224f8f;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hk-top-tab--active {
+  background-color: #224f8f;
+  color: #ffffff;
+}
+
+.hk-top-tab:active {
+  transform: translateY(1px);
+}
+/* 兩排工具列容器 */
+.hk-toolbar-2row {
+  background-color: #bcdcf5;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 每一排的左右排列 */
+.hk-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 第二排右邊（查詢＋圖表） */
+.hk-row-right {
+  display: flex;
+  gap: 8px;
+}
+.hk-select-full {
+  width: 100%;
+  box-sizing: border-box;
+  }
+  .hk-row-right {
+  display: flex;
+  gap: 8px;
+}
+.hk-half {
+  width: 50%;
+}
+.hk-select-full {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 兩排工具列容器 */
+.hk-toolbar-2row {
+  background-color: #bcdcf5;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 每一排 */
+.hk-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 左側綠色下拉框固定一半寬度 */
+.hk-half {
+  width: 50%;
+}
+
+/* 第二排右側按鈕排在一起 */
+.hk-row-right {
+  display: flex;
+  gap: 8px;
+}
+
+/* ===========================
+   查詢列表樣式
+   =========================== */
+
+.hk-list {
+  padding: 8px 10px 12px;
+  background-color: #a8d4f0;
+}
+
+.hk-list-table {
+  border: 1px solid #7fb2d9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.hk-list-row {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr 1fr;  /* 日期欄再寬一點 */
+}
+
+.hk-list-row--header .hk-list-cell {
+  background-color: #224f8f;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.hk-list-cell {
+  padding: 8px 10px;          /* 原本 4px 6px → 行距加倍 */
+  font-size: 15px;            /* 原本 13px → 放大 */
+  border-bottom: 1px solid #b4cde0;
+  background-color: #e5f3ff;
+}
+
+/* 斑馬紋效果 */
+.hk-list-row:not(.hk-list-row--header):nth-child(even) .hk-list-cell {
+  background-color: #f3f8ff;
+}
+
+.hk-list-note {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #00325b;
+}
+

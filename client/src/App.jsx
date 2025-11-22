@@ -16,23 +16,25 @@ import Assistant from "./components/Assistant";
 import Footer from "./components/Footer";
 import LoginModal from "./components/LoginModal";
 
+import HealthKeeper from "./pages/HealthKeeper"; // 健康管家頁面
+import MedicalBodyMap from "./pages/MedicalBodyMap"; // 🔥 新增互動人體頁面
 import AIGame from "./pages/AIGame";
 import Signup from "./pages/Signup.jsx";
 import HealthChat from "./pages/HealthChat.jsx";
 
 import "./styles.css";
+import "./pages/HealthKeeper.css";
 
-/** 首頁只有 Hero + Footer */
+/** 首頁（只有 Hero） */
 function HomeOnlyHero() {
   return (
     <>
       <Hero />
-      
     </>
   );
 }
 
-/** ✅ 直接把 GamesPage 定義在這支檔案內（避免找不到檔案） */
+/** /games：AI 遊戲 + VR + 助理 + Footer */
 function GamesPage() {
   const location = useLocation();
 
@@ -48,9 +50,9 @@ function GamesPage() {
 
   return (
     <>
-      <Games />      {/* id="games" 在元件內 */}
-      <VR />         {/* 最外層已是 id="vr" */}
-      <Assistant />  {/* 最外層已是 id="assistant" */}
+      <Games />
+      <VR />
+      <Assistant />
       <Footer />
     </>
   );
@@ -61,27 +63,38 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      {/* 所有頁面都會先看到 Header */}
       <Header onLoginClick={() => setIsLoginOpen(true)} />
 
       <Routes>
         {/* 首頁 */}
         <Route path="/" element={<HomeOnlyHero />} />
 
-        {/* /games：依序顯示 Games → VR → Assistant → Footer */}
+        {/* 遊戲主頁（AI遊戲 + VR + 助理） */}
         <Route path="/games" element={<GamesPage />} />
 
-        {/* 單獨的 AI 測驗頁 */}
+        {/* 健康管家 */}
+        <Route path="/health-keeper" element={<HealthKeeper />} />
+
+        {/* AI Game */}
         <Route path="/ai-game" element={<AIGame />} />
 
-        {/* 其他頁面 */}
+        {/* 🔥 新增互動人體疾病地圖頁 */}
+        <Route path="/MedicalBodyMap" element={<MedicalBodyMap />} />
+
+        {/* 註冊 / 健康小助手聊天 */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/health/chat" element={<HealthChat />} />
 
-        {/* 兜底導回首頁 */}
+        {/* 兜底：全部導回首頁 */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
-      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+      {/* 登入 Modal */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+      />
     </BrowserRouter>
   );
 }
