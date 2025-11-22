@@ -589,6 +589,49 @@ app.get("/api/news", async (req, res) => {
   }
 });
 
+// 新增或更新當日血壓
+app.post("/api/bloodpressure", async (req, res) => {
+  try {
+    if (!req.user?.uid) return res.status(401).json({ error: "未登入" });
+    const { systolic, diastolic } = req.body || {};
+    if (!systolic || !diastolic)
+      return res.status(400).json({ error: "缺少血壓數值" });
+
+    const today = new Date().toISOString().split("T")[0];
+
+    await pool.execute(
+      `INSERT INTO blood_pressure (user_id, date, systolic, diastolic)
+       VALUES (?, ?, ?, ?)
+       ON DUPLICATE KEY UPDATE systolic = VALUES(systolic), diastolic = VALUES(diastolic)`,
+      [req.user.uid, today, systolic, diastolic]
+    );
+
+    res.json({ ok: true, message: "血壓紀錄已儲存" });
+  } catch (err) {
+    console.error("add blood pressure error:", err);
+    res.status(500).json({ error: "新增失敗" });
+  }
+});
+
+// 查詢自己所有血壓紀錄
+app.get("/api/bloodpressure", async (req, res) => {
+  try {
+    if (!req.user?.uid) return res.status(401).json({ error: "未登入" });
+
+    const [rows] = await pool.query(
+      `SELECT date, systolic, diastolic
+       FROM blood_pressure
+       WHERE user_id = ?
+       ORDER BY date ASC`,
+      [req.user.uid]
+    );
+
+    res.json({ ok: true, records: rows });
+  } catch (err) {
+    console.error("get blood pressure error:", err);
+    res.status(500).json({ error: "讀取失敗" });
+  }
+});
 
 // ---- 啟動伺服器 ----
 const server = app.listen(PORT, () => {
