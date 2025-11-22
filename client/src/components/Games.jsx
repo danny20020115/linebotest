@@ -1,20 +1,19 @@
 // src/components/Games.jsx
 import { Link } from "react-router-dom";
-import BodyMapWidget from "./BodyMapWidget"; // ✅ 改成引入元件版
 
 function Games() {
   const games = [
     {
       icon: "🧠",
-      title: "認知訓練",
-      description: "互動式謎題和記憶遊戲，旨在改善認知功能和心理敏捷性。",
+      title: "患者教育",
+      description: "引人入勝的遊戲，幫助患者了解他們的病情和治療計劃。",
       button: "立即試用 →",
       className: "card card-blue",
-      link: "/MedicalBodyMap", // 這張照樣跳到獨立頁面
+      link: "/MedicalBodyMap",
     },
     {
       icon: "🎯",
-      title: "手術模擬",
+      title: "健康管家",
       description: "在無風險的虛擬環境中練習手術程序，並獲得即時反饋。",
       button: "開始訓練 →",
       className: "card card-teal",
@@ -22,11 +21,11 @@ function Games() {
     },
     {
       icon: "🎮",
-      title: "患者教育",
-      description: "引人入勝的遊戲，幫助患者了解他們的病情和治療計劃。",
+      title: "AI 人體互動遊戲",
+      description: "互動式人體定位與診斷教學遊戲，提升醫療教育體驗。",
       button: "探索遊戲 →",
       className: "card card-green",
-      link: null, // 不跳頁，內嵌人體圖
+      link: "/ai-game",  // ← 現在改成正常跳頁
     },
   ];
 
@@ -46,26 +45,12 @@ function Games() {
               <div className="card-icon">{game.icon}</div>
               <h3 className="card-title">{game.title}</h3>
 
-              {game.title === "患者教育" ? (
-                <>
-                  <p className="card-description">
-                    點選人體周圍的部位，查看對應的疾病與衛教資訊。
-                  </p>
-                  <div className="mt-4 h-[360px]">
-                    <BodyMapWidget />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <p className="card-description">{game.description}</p>
-                  {game.link ? (
-                    <Link to={game.link} className="card-button">
-                      {game.button}
-                    </Link>
-                  ) : (
-                    <button className="card-button">{game.button}</button>
-                  )}
-                </>
+              <p className="card-description">{game.description}</p>
+
+              {game.link && (
+                <Link to={game.link} className="card-button">
+                  {game.button}
+                </Link>
               )}
             </div>
           ))}

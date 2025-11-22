@@ -27,14 +27,11 @@ function Hero() {
         <h1>
           革命性的 <span>醫療科技</span>
         </h1>
-        <p>體驗 AI + VR 的未來醫療平台</p>
+        <p>體驗的未來醫療平台</p>
 
         <div className="hero-buttons">
           <Link to="/games" className="btn btn-primary">
             開始使用
-          </Link>
-          <Link to="/assistant" className="btn btn-secondary">
-            了解更多
           </Link>
         </div>
       </div>
