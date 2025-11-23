@@ -1,0 +1,222 @@
+/* === 整頁骨架（固定放在全站 header 下方；不碰全站 .header 樣式） === */
+.hc-page{
+  --hc-primary:#2563eb;
+  --hc-muted:#64748b;
+  --hc-border:#e5e7eb;
+  --hc-bg:#f8fafc;
+  --hc-panel:#ffffff;
+  --hc-shadow:0 10px 24px rgba(2,6,23,.06);
+}
+
+/* 子 Header：左上角頭像 + 標題，視覺跟全站頂導一致 */
+.hc-header{
+  background:linear-gradient(180deg,#eef5ff 0%, #fbfdff 100%);
+  border-bottom:1px solid #eef2f7;
+}
+.hc-header-inner{
+  max-width:1200px; margin:0 auto; padding:22px 16px;
+}
+.hc-brand{display:flex; align-items:center; gap:14px;}
+.hc-avatar-lg{
+  width:44px; height:44px; border-radius:12px; display:grid; place-items:center;
+  background:#1d4ed814; font-size:22px;
+}
+.hc-title{font-size:28px; font-weight:800; color:#111827; line-height:1.1;}
+.hc-sub{color:var(--hc-muted); margin-top:6px;}
+
+/* === FAQ 橫向滑動：一列卡片 + 兩端圓圈箭頭 === */
+.hc-faq-strip{
+  position:relative; max-width:1200px; margin:12px auto 10px; padding:0 56px;
+}
+.hc-faq-viewport{
+  overflow-x:auto; overflow-y:visible; scrollbar-width:none;
+}
+.hc-faq-viewport::-webkit-scrollbar{display:none}
+.hc-faq-rail{
+  display:flex; gap:16px; padding:8px 0 4px; align-items:stretch;
+}
+
+/* 讓整條 FAQ 區與可視範圍成為定位與層級基準 */
+.hc-faq-strip { position: relative; }
+.hc-faq-viewport { position: relative; z-index: 1; }
+
+/* 圓圈箭頭（左右） */
+.hc-faq-nav{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--hc-border);
+  background: #fff;
+  box-shadow: var(--hc-shadow);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: #111827;
+
+  /* ✅ 確保在最上層並可點擊 */
+  z-index: 50;
+  pointer-events: auto;
+}
+
+.hc-faq-nav span{ font-size: 22px; line-height: 1; }
+.hc-faq-nav.btn-left{ left: 6px; }
+.hc-faq-nav.btn-right{ right: 6px; }
+.hc-faq-nav:hover{ filter: brightness(1.02); }
+
+
+/* FAQ 卡片 */
+.hc-card{
+  min-width: 360px; max-width:360px; flex:0 0 auto;
+  background:var(--hc-panel); border:1px solid var(--hc-border);
+  border-radius:20px; box-shadow:var(--hc-shadow);
+  padding:18px 18px 14px;
+}
+.hc-card-title{
+  text-align:center; font-weight:800; font-size:18px; color:#111827;
+  padding-bottom:10px; border-bottom:1px dashed var(--hc-border); margin-bottom:8px;
+}
+.hc-card-list{list-style:none; padding:0; margin:0; display:grid; gap:10px;}
+.hc-link{
+  background:transparent; border:none; color:#1d4ed8; font-weight:700; cursor:pointer;
+  text-align:left; width:100%;
+}
+.hc-link:hover{text-decoration:underline}
+
+/* === 聊天區：放大、可滾動、好閱讀 === */
+.hc-chat-wrap{
+  max-width:1200px; margin:16px auto 40px; padding:0 16px;
+}
+.hc-chat-panel{
+  background:var(--hc-panel); border:1px solid var(--hc-border); border-radius:20px;
+  box-shadow:var(--hc-shadow); padding:18px; min-height:56vh;
+  display:flex; flex-direction:column;
+}
+.hc-thread{
+  flex:1; overflow:auto; padding-right:4px; scroll-behavior:smooth;
+  display:flex; flex-direction:column; gap:10px;
+}
+
+/* 泡泡列 */
+.hc-row{display:flex; gap:10px;}
+.hc-row.user{justify-content:flex-end}
+.hc-row.system .hc-bubble{background:#fff7ed; border-color:#fed7aa}
+.hc-avatar{
+  width:28px; height:28px; border-radius:999px; display:grid; place-items:center;
+  background:#e2e8f0; font-size:14px; flex:0 0 28px;
+}
+.hc-bubble{
+  max-width:74%; padding:12px 14px; border-radius:14px;
+  font-size:15px; line-height:1.56; background:#fff; border:1px solid var(--hc-border);
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+.hc-row.user .hc-bubble{background:#eff6ff; border-color:#dbeafe}
+
+/* AI 回覆的段落/清單 */
+.hc-paragraph{margin:.2em 0 .55em; color:#111827}
+.hc-list{margin:.2em 0 .6em .9em}
+.hc-list li{margin:.22em 0}
+
+/* 輸入列 */
+.hc-composer{
+  position:sticky; bottom:0; display:flex; align-items:center; gap:8px;
+  margin-top:12px; background:#fff; border:1px solid var(--hc-border);
+  border-radius:999px; padding:8px 8px 8px 12px; box-shadow:var(--hc-shadow);
+}
+.hc-composer input{
+  flex:1; height:42px; border:0; outline:0; font-size:15px; padding:0 8px; background:transparent;
+}
+.hc-composer button{
+  border:0; border-radius:999px; height:36px; padding:0 14px; cursor:pointer;
+  background:var(--hc-primary); color:#fff; font-weight:700;
+}
+.hc-composer button:disabled{opacity:.5; cursor:default}
+
+.hc-disclaimer{
+  text-align:center; color:var(--hc-muted); font-size:12px; margin-top:8px;
+}
+
+/* 小螢幕優化 */
+@media (max-width:640px){
+  .hc-card{min-width: 80vw; max-width: 80vw;}
+  .hc-title{font-size:24px}
+}
+
+/* FAQ 橫條容器（定位基準） */
+.hc-faq-strip{
+  position: relative;
+  margin: 16px auto 10px;
+  max-width: 1200px;
+}
+
+/* 可視範圍：真正會橫向捲動的容器（一定要 overflow-x:auto） */
+.hc-faq-viewport{
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+
+  /* 給左右箭頭留空間 */
+  padding: 8px 56px;
+}
+
+/* 內部橫排 */
+.hc-faq-row{
+  display: inline-flex;
+  gap: 16px;
+  min-width: max-content; /* 內容比視窗寬才會需要捲動 */
+}
+
+/* 單張卡片 */
+.faq-card{
+  background: #fff;
+  border: 1px solid var(--hc-border, #e5e7eb);
+  border-radius: 18px;
+  box-shadow: var(--hc-shadow, 0 8px 18px rgba(2,6,23,.08));
+  width: 360px;
+  padding: 16px 18px;
+}
+.faq-title{
+  font-weight: 800;
+  font-size: 20px;
+  color: #111827;
+  text-align: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--hc-border, #e5e7eb);
+  margin-bottom: 10px;
+}
+.faq-list{ list-style: none; margin: 0; padding: 0; }
+.faq-link{
+  background: transparent; border: 0; padding: 10px 0;
+  color: #1d4ed8; font-size: 16px; cursor: pointer; text-align: left;
+  display: inline-flex; gap: 8px; align-items: center;
+}
+.faq-link:hover{ text-decoration: underline; }
+
+/* 圓圈箭頭（左右） */
+.hc-faq-nav{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--hc-border, #e5e7eb);
+  background: #fff;
+  box-shadow: var(--hc-shadow, 0 8px 18px rgba(2,6,23,.08));
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: #111827;
+
+  /* 確保浮在最上層且可點擊 */
+  z-index: 50;
+  pointer-events: auto;
+}
+.hc-faq-nav span{ font-size: 22px; line-height: 1; }
+.hc-faq-nav.btn-left{ left: 6px; }
+.hc-faq-nav.btn-right{ right: 6px; }
+.hc-faq-nav:hover{ filter: brightness(1.02); }

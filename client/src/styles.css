@@ -1,0 +1,780 @@
+/* ===========================
+   RESET & BASE
+=========================== */
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background-color: #dbcbcb;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+
+/* ===========================
+   HEADER（最終精簡版）
+=========================== */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eef2f7;
+  box-shadow: 0 2px 12px rgba(17,24,39,.04);
+}
+
+.header .nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- Logo 區域 --- */
+.header .logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  margin-bottom: -0%;
+}
+
+.header .logo-img {
+  height: 40px;     /* ❤️ 已調整為完美置中版本 */
+  object-fit: contain;
+}
+
+.header .logo-text {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* --- 註冊 + 登入按鈕群組 --- */
+.auth-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.signup-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.signup-btn:hover {
+  background: #2563eb;
+  color: #fff;
+}
+
+/* --- 登入按鈕 --- */
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+
+.login-btn:hover {
+  filter: brightness(1.05);
+}
+
+.login-icon {
+  font-size: 16px;
+}
+
+.hello {
+  margin-right: 10px;
+  color:#374151;
+  font-size: 0.95rem;
+}
+/* ===========================
+   HERO（主視覺＋跑馬燈）
+=========================== */
+
+.hero {
+  min-height: calc(100vh - 90px);
+  padding-block: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(135deg, #dbeafe 0%, #ffffff 50%, #f0fdfa 100%);
+}
+
+/* 跑馬燈容器 */
+.hero-marquee {
+  overflow: hidden;
+  width: 100%;
+  height: 350px;
+  margin: 0 auto 40px;
+  position: relative;
+}
+
+/* 軌道（動畫） */
+.marquee-track {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  gap: 24px;
+  animation: heroMarquee 18s linear infinite;
+}
+
+.hero-marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* 馬燈圖片 */
+.marquee-track img {
+  height: 350px;
+  width: auto;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+@keyframes heroMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* 主文字內容 */
+.hero-content {
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-content p {
+  font-size: 1.8rem;
+  color: #2563eb;
+  margin-bottom: 28px;
+  font-weight: 500;
+}
+
+.hero-title {
+  font-size: 5rem;
+  font-weight: 800;
+  color: #1f2937;
+}
+
+.hero-highlight {
+  color: #2563eb;
+}
+
+.hero-description {
+  font-size: 1.6rem;
+  color: #4b5563;
+  max-width: 780px;
+  margin: 0 auto 48px;
+  line-height: 1.75;
+}
+
+/* ===== RWD ===== */
+@media (max-width: 768px) {
+  .hero-marquee {
+    height: 72px;
+    margin-bottom: 36px;
+  }
+  .marquee-track img {
+    height: 72px;
+  }
+  .hero-title {
+    font-size: 3rem;
+  }
+  .hero-description {
+    font-size: 1.2rem;
+  }
+}
+
+
+/* ===========================
+   SECTION 標題樣式
+=========================== */
+
+.section {
+  padding: 80px 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.section-description {
+  font-size: 1.125rem;
+  color: #4b5563;
+}
+
+.section-bordered {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 60px 40px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* ===========================
+   CARDS（疾病、管家、知識、AI助手）
+=========================== */
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  padding: 1.75rem;
+  transition: 0.25s ease;
+  text-align: left;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.card-description {
+  color: #4b5563;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-button {
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.card-button:hover {
+  background-color: #1e40af;
+  text-decoration: none !important;
+}
+
+/* 不同主題色卡片 */
+.card-blue {
+  background: linear-gradient(to bottom right, #eff6ff, #dbeafe);
+}
+
+.card-teal {
+  background: linear-gradient(to bottom right, #f0fdfa, #ccfbf1);
+}
+
+.card-green {
+  background: linear-gradient(to bottom right, #f0fdf4, #dcfce7);
+}
+
+
+/* ===========================
+   VR Demo
+=========================== */
+
+.vr-demo {
+  background: linear-gradient(135deg, #ccfbf1, #bfdbfe);
+  padding: 32px;
+  border-radius: 16px;
+}
+
+.demo-icon {
+  font-size: 2rem;
+}
+
+.demo-list {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.demo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+  margin-bottom: 8px;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.status.available {
+  color: #0d9488;
+  font-weight: 600;
+}
+
+
+/* ===========================
+   AI Assistant Demo
+=========================== */
+
+.ai-assistant-demo {
+  background: linear-gradient(135deg, #2563eb, #0d9488);
+  border-radius: 24px;
+  padding: 48px;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.assistant-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 60px;
+}
+
+.assistant-features {
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.assistant-features li {
+  margin-bottom: 12px;
+  color: #dbeafe;
+}
+
+.chat-demo {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ai-message {
+  background: rgba(255,255,255,0.2);
+  padding: 12px;
+  border-radius: 12px;
+  max-width: 80%;
+}
+
+.user-message {
+  background: rgba(255,255,255,0.1);
+  padding: 12px;
+  border-radius: 12px;
+  align-self: flex-end;
+  max-width: 80%;
+}
+/* ===========================
+   LOGIN MODAL（登入彈窗）
+=========================== */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.4);
+  backdrop-filter: blur(3px);
+  z-index: 9999;
+}
+.modal.is-open {
+  display: flex !important;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.18);
+  padding: 24px 28px;
+  position: relative;
+  animation: fadeInScale .25s ease;
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* 標題列 */
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 36px;
+  margin-bottom: 12px;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* 關閉按鈕 */
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  padding: 2px;
+  font-size: 20px;
+  color: #6b7280;
+  cursor: pointer;
+}
+.close-btn:hover {
+  color: #374151;
+}
+
+/* 表單 */
+.login-form {
+  margin-top: 8px;
+}
+
+.form-group {
+  margin: 14px 0;
+}
+
+.form-group label {
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.login-form input {
+  width: 100%;
+  height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f9fafb;
+  font-size: 15px;
+  transition: .2s;
+}
+
+.login-form input:focus {
+  outline: none;
+  background: #fff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* 登入按鈕 */
+.btn.btn-primary.btn-full {
+  width: 100%;
+  height: 48px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 800;
+  font-size: 18px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn.btn-primary.btn-full:hover {
+  filter: brightness(1.05);
+}
+
+.btn.btn-primary.btn-full:active {
+  transform: translateY(1px);
+}
+
+/* 註冊連結 */
+.signup-line {
+  text-align: center;
+  margin: 14px 0 4px;
+  color: #6b7280;
+}
+
+.link-like {
+  background: none;
+  border: none;
+  margin-left: 6px;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.link-like:hover {
+  text-decoration: underline;
+}
+
+/* 手機 */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+  .modal-title {
+    font-size: 24px;
+  }
+}
+
+
+/* ===========================
+   AI GAME（AI 測驗頁）
+=========================== */
+
+.ai-game-container {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 16px;
+}
+
+.ai-game-container h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.ai-game-container p {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+.ai-game-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.ai-game-form label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.ai-game-form input,
+.ai-game-form select {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 15px;
+  transition: .2s;
+}
+
+.ai-game-form input:focus,
+.ai-game-form select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+  outline: none;
+}
+
+.generate-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.generate-btn:hover {
+  background: #1d4ed8;
+}
+
+.question-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  background: #fff;
+}
+
+.question-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.option-list {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.option-item label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.option-item:hover label {
+  background: #f9fafb;
+}
+
+.answer-block {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+
+/* ===========================
+   FOOTER（頁尾）
+=========================== */
+
+.footer {
+  background: #1f2937;
+  color: white;
+  padding: 64px 0 32px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 68px;
+  max-width: 1200px;
+  margin: 0 auto 48px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  margin-bottom: 16px;
+}
+
+.footer-description {
+  color: #9ca3af;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.footer-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: .2s;
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-item {
+  display: flex;
+  gap: 8px;
+  color: #9ca3af;
+}
+
+.footer-bottom {
+  border-top: 1px solid #374151;
+  padding-top: 32px;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.game-icon-img {
+  width: 100px;      /* 你要多大都可以 32 / 48 / 64 */
+  height: 100px;
+  object-fit: contain;
+}
+.games-bg {
+  position: relative;
+  padding: 80px 0;
+}
+
+
+
+.games-bg > * {
+  position: relative;
+  z-index: 1;  /* 讓內容浮在背景上 */
+}
+
