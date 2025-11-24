@@ -33,9 +33,7 @@ function Hero() {
           <Link to="/games" className="btn btn-primary">
             開始使用
           </Link>
-          <Link to="/assistant" className="btn btn-secondary">
-            了解更多
-          </Link>
+          
         </div>
       </div>
     </section>

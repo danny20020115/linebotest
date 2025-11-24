@@ -38,7 +38,7 @@ export default function Header({ onLoginClick }) {
         {/* ✅ Logo + 品牌文字 */}
         <Link to="/health" className="logo" aria-label="回首頁">
           <img
-            className="logo-img"
+            className="log-img"
             src="/images/logo.png"   // 放在 public/images/logo.png
             alt="醫資心聯新 Logo"
           />
@@ -54,12 +54,19 @@ export default function Header({ onLoginClick }) {
                 登出
               </button>
             </div>
+            
           ) : (
             <button className="login-btn" onClick={onLoginClick}>
               <span className="login-icon" aria-hidden>👤</span>
               登入
             </button>
+            
           )}
+                  <button
+          className="login-btn"onClick={() => (window.location.href = "/signup")}>
+          <span className="login-icon" aria-hidden>👤</span>
+            註冊
+        </button>
         </div>
       </div>
     </header>

@@ -3,23 +3,20 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   const services = [
-    { text: "AI遊戲", href: "/ai-game" }, // ✅ 改成路由
-    { text: "VR復健", href: "#vr" },
-    { text: "AI助手", href: "#assistant" },
-    { text: "遠程醫療", href: "#" },
+    { text: "知識王", href: "/ai-game" }, // ✅ 改成路由
+    { text: "健康管家", href: "/Health-keeper" },
+    { text: "疾病專區", href: "/assistant" },
+    { text: "AI醫療助手", href: "#" },
   ];
 
   const company = [
-    { text: "關於我們", href: "#" },
-    { text: "職業機會", href: "#" },
-    { text: "隱私政策", href: "#" },
-    { text: "服務條款", href: "#" },
+    { text: "關於我們", href: "" },
+    { text: "隱私政策", href: "" },
   ];
 
   const contacts = [
-    { icon: "📞", text: "+886 2 1234-5678" },
-    { icon: "✉️", text: "hello@medtechplus.com" },
-    { icon: "📍", text: "台北市信義區醫療街123號" },
+    { icon: "📞", text: "+886-3-265-9999" },
+    { icon: "📍", text: "320桃園市中壢區中北路200號" },
   ];
 
   return (
@@ -29,11 +26,12 @@ function Footer() {
           {/* 公司資訊 */}
           <div className="footer-column">
             <div className="footer-logo">
-              <div className="logo-icon">❤️</div>
-              <span className="logo-text">MedTech Plus</span>
+              <div className="logo-icon"></div>
+             <h3> <span className="logo-text">醫資心聯新</span></h3>
             </div>
             <p className="footer-description">
-              透過AI和VR技術革新醫療保健。
+            我們運用 AI 技術打造智慧醫療體驗，提供健康助手、互動式醫療遊戲、個人化健康管理與即時諮詢服務，
+            健康管家模擬及醫療知識遊戲，同時搭配最新醫療資訊與專業建議。
             </p>
           </div>
 
@@ -54,17 +52,7 @@ function Footer() {
             </ul>
           </div>
 
-          {/* 公司資訊 */}
-          <div className="footer-column">
-            <h3 className="footer-title">公司資訊</h3>
-            <ul className="footer-links">
-              {company.map((item, i) => (
-                <li key={i}>
-                  <a href={item.href}>{item.text}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
+
 
           {/* 聯絡方式 */}
           <div className="footer-column">

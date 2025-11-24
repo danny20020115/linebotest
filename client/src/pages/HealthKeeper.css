@@ -325,3 +325,92 @@
   color: #00325b;
 }
 
+/* ====== 下方整個專區外框 ====== */
+.body-extra-sections {
+  margin-top: 48px;
+  padding: 32px 24px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  background-color: #fafafa; /* 想要白底就改成 #ffffff */
+}
+
+/* 左右欄：一欄一個直立區塊 */
+.body-extra-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 220px;
+}
+
+/* 左右欄可以視需要調整寬度 */
+.body-extra-column-left {
+  max-width: 260px;
+}
+
+.body-extra-column-right {
+  max-width: 260px;
+}
+
+/* 上面一格一格的主分類按鈕（紅 & 藍） */
+.body-extra-main {
+  padding: 10px 0;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 6px;
+  color: #ffffff;
+}
+
+/* 紅色主分類 */
+.body-extra-main-red {
+  background-color: #f97373; /* 柔和一點的紅 */
+}
+
+/* 藍色主分類 */
+.body-extra-main-blue {
+  background-color: #60a5fa; /* 柔和的藍 */
+}
+
+/* 標籤區：下面排一排小白塊 */
+.body-extra-tags-left,
+.body-extra-tags-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* 小白標籤（家庭親子、兩性話題等） */
+.body-extra-tag {
+  padding: 6px 12px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px; /* 做成膠囊形狀，想要方一點就改 6px */
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+/* hover 效果 */
+.body-extra-tag:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+/* 手機版：兩欄變一欄往下排 */
+@media (max-width: 768px) {
+  .body-extra-sections {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .body-extra-column {
+    max-width: 100%;
+  }
+}

@@ -6,24 +6,24 @@ function Games() {
   const games = [
     {
       icon: "🧠",
-      title: "認知訓練",
-      description: "互動式謎題和記憶遊戲，旨在改善認知功能和心理敏捷性。",
+      title: "疾病專區",
+      description: "透過圖示的方式，讓你更了解身體不同部位的常見疾病。",
       button: "立即試用 →",
       className: "card card-blue",
       link: "/MedicalBodyMap", // 這張照樣跳到獨立頁面
     },
     {
       icon: "🎯",
-      title: "手術模擬",
-      description: "在無風險的虛擬環境中練習手術程序，並獲得即時反饋。",
-      button: "開始訓練 →",
+      title: "健康管家",
+      description: "讓使用者練習應對常見問題並獲得即時回饋。透過實作方式強化自我照護與判斷能力。",
+      button: "開始紀錄 →",
       className: "card card-teal",
       link: "/health-keeper",
     },
     {
       icon: "🎮",
-      title: "患者教育",
-      description: "引人入勝的遊戲，幫助患者了解他們的病情和治療計劃。",
+      title: "健康知識王",
+      description: "以寓教於樂的遊戲形式呈現疾病與治療知識，讓使用者在輕鬆互動中加深理解。透過答題累積成就，培養正確的健康觀念與行為。",
       button: "探索遊戲 →",
       className: "card card-green",
       link: "/ai-game", // 不跳頁，內嵌人體圖

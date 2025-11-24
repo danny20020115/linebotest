@@ -8,7 +8,7 @@ const DISEASE_OPTIONS = [
   "糖尿病",
   "高血壓",
   "心臟病",
-  "中風（腦中風）",
+  "腦中風",
   "帕金森氏症",
   "慢性腎病",
   "慢性肝炎",
@@ -31,6 +31,15 @@ export default function Signup() {
     weight: "",
     notes: "",
     diseases: [],
+    phone: "",
+    emergencyContact: "",
+    drugAllergy: "",
+    currentMedications: "",
+    privacyAgree: false,
+    familyHistory: "",
+    lifestyle: "",
+    surgeryHistory: "",
+    address: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -174,16 +183,80 @@ export default function Signup() {
             min="1"
           />
         </div>
+        {/* 額外醫療資料欄位 */}
+<div className="grid-2">
+  <input
+    type="text"
+    placeholder="手機號碼"
+    value={form.phone}
+    onChange={update("phone")}
+  />
+
+  <input
+    type="text"
+    placeholder="緊急聯絡人（姓名 + 電話）"
+    value={form.emergencyContact}
+    onChange={update("emergencyContact")}
+  />
+</div>
+
+<div className="grid-2">
+  <input
+    type="text"
+    placeholder="藥物過敏（如無請填 無）"
+    value={form.drugAllergy}
+    onChange={update("drugAllergy")}
+  />
+
+  <input
+    type="text"
+    placeholder="正在使用中的藥物（如無請填 無）"
+    value={form.currentMedications}
+    onChange={update("currentMedications")}
+  />
+</div>
+
+<div className="grid-2">
+  <input
+    type="text"
+    placeholder="家族病史（如無請填 無）"
+    value={form.familyHistory}
+    onChange={update("familyHistory")}
+  />
+
+  <input
+    type="text"
+    placeholder="生活習慣（如吸菸/飲酒/規律運動）"
+    value={form.lifestyle}
+    onChange={update("lifestyle")}
+  />
+</div>
+
+<div className="grid-2">
+  <input
+    type="text"
+    placeholder="既往手術史（如無請填 無）"
+    value={form.surgeryHistory}
+    onChange={update("surgeryHistory")}
+  />
+
+  <input
+    type="text"
+    placeholder="地址（至少填縣市）"
+    value={form.address}
+    onChange={update("address")}
+  />
+</div>
 
         {/* 病史 */}
-        <label className="section-title">過去的長期病病紀錄：</label>
+        <label className="section-title">過去的長期病患紀錄：</label>
         <div className="checkbox-group">
           {DISEASE_OPTIONS.map((label) => (
             <label key={label}>
               <input
-                type="checkbox"
-                checked={form.diseases.includes(label)}
-                onChange={() => toggleDisease(label)}
+    type="checkbox"
+    checked={form.diseases.includes(label)}
+    onChange={() => toggleDisease(label)}
               />
               {label}
             </label>
@@ -202,10 +275,29 @@ export default function Signup() {
         <button type="submit" disabled={loading}>
           {loading ? "註冊中…" : "註冊"}
         </button>
+        {/* 隱私同意 */}
+<label className="privacy-check">
+  <input
+    type="checkbox"
+    checked={form.privacyAgree}
+    onChange={(e) =>
+      setForm((p) => ({ ...p, privacyAgree: e.target.checked }))
+    }
+    required
+  />
+  我已同意資料使用與隱私權政策
+</label>
 
         <p className="login-link">
-          已有帳號？ <a href="/?login=1">點此登入</a>
-        </p>
+  已有帳號？{" "}
+  <a href="#"
+    className="login-text-btn"
+    onClick={(e) => {e.preventDefault();window.dispatchEvent(new Event("open-login"));}}
+  >
+    點此登入
+  </a>
+</p>
+
       </form>
     </div>
   );
